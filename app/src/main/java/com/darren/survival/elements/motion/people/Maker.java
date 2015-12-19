@@ -1,12 +1,12 @@
 package com.darren.survival.elements.motion.people;
 
-import com.darren.survival.elements.Survival;
+import com.darren.survival.elements.Survivor;
 
 /**
  * Created by Darren on 2015/12/11 0011.
  */
 public class Maker implements Makable {
-    private Survival protagonist = null;
+    private Survivor protagonist = null;
 
     private static Maker ourInstance = new Maker();
 
@@ -15,7 +15,7 @@ public class Maker implements Makable {
     }
 
     private Maker() {
-        protagonist = Survival.getInstance();
+        protagonist = Survivor.getInstance();
     }
 
     @Override

@@ -1,8 +1,11 @@
 package com.darren.survival.elements.model;
 
+import com.darren.survival.elements.motion.people.Hunter;
+import com.darren.survival.elements.motion.people.Tourer;
 import com.darren.survival.utls.RandomUtil;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.Map;
 
 /**
  * Created by Darren on 2015/12/6 0006.
@@ -10,7 +13,7 @@ import java.lang.reflect.InvocationTargetException;
 public class Scene {
 
     //场景类的路径，用来根据String获得实例
-    public static final String packagePath = "com.darren.servival.elements.scene.";
+    public static final String packagePath = "com.darren.survival.elements.scene.";
     //终点的概率
     public static final int PROBABLITY1_3 = 0;
     public static final int PROBABLITY4_5 = 10;
@@ -112,6 +115,20 @@ public class Scene {
 
     public int getSpeed() {
         return speed;
+    }
+
+    public Map<Good[], Integer[]> getHuntedGoods() {
+        return null;
+    }
+
+    public Map<Good[], Integer[]> getTouredGoods() {
+        return null;
+    }
+
+    public Map<Good[], Integer[]> getGoods(Motion motion) {
+        if(motion == Hunter.getInstance()) return getHuntedGoods();
+        if(motion == Tourer.getInstance()) return getTouredGoods();
+        return null;
     }
 
 }

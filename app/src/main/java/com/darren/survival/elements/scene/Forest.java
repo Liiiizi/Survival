@@ -27,19 +27,19 @@ public class Forest extends Scene {
     public final int[] nextSceneWeight = {1, 1, 1, 1, 1};
     //获得物品相关
     private static final Good[] FOODS = {Rabbit.getInstance(), Squirrel.getInstance(), Snake.getInstance()};
-    private static final int FOODS_PR = 15;
+    private static final Integer[] FOODS_INFO = {15, 6};
     private static final Good[] WOODS = {Branch.getInstance(), Firewood.getInstance(), Sawdust.getInstance()};
-    private static final int WOODS_PR = 70;
-    private static final Good[] BUG = {Bug.getInstance()};
-    private static final int BUG_PR = 30;
+    private static final Integer[] WOODS_INFO = {70, 2};
+    private static final Good[] BUGS = {Bug.getInstance()};
+    private static final Integer[] BUGS_INFO = {30, 1};
     private static final Good[] HUMAN_REMAINS = {Rope.getInstance(), Lighter.getInstance(), Wire.getInstance()};
-    private static final int HUMAN_REMAINS_PR = 5;
+    private static final Integer[] HUMAN_REMAINS_INFO = {5, 1};
     private static final Good[] CIRRUS = {Cirrus.getInstance()};
-    private static final int CIRRUS_PR = 10;
+    private static final Integer[] CIRRUS_INFO = {10, 1};
     private static final Good[] STONE = {Stone.getInstance()};
-    private static final int STONE_PR = 70;
-    private static final Map<Good[], Integer> GOODS_PR = new HashMap<>();
-
+    private static final Integer[] STONE_INFO = {70, 1};
+    private static final Map<Good[], Integer[]> HUNTED_GOODS = new HashMap<>();
+    private static final Map<Good[], Integer[]> TOURED_GOODS = new HashMap<>();
     //此场景类的名字
     public static final String Type = "Forest";
     //此场景的下一场景是否可能为终点场景
@@ -61,14 +61,6 @@ public class Forest extends Scene {
         initGoods();
     }
 
-    private void initGoods() {
-        GOODS_PR.put(FOODS, FOODS_PR);
-        GOODS_PR.put(WOODS,WOODS_PR);
-        GOODS_PR.put(BUG,BUG_PR);
-        GOODS_PR.put(HUMAN_REMAINS,HUMAN_REMAINS_PR);
-        GOODS_PR.put(CIRRUS,CIRRUS_PR);
-        GOODS_PR.put(STONE,STONE_PR);
-    }
 
     //单例模式
     public static Forest getInstance() {
@@ -97,5 +89,24 @@ public class Forest extends Scene {
 
     public int getSpeed() {
         return speed;
+    }
+
+    private void initGoods() {
+        HUNTED_GOODS.put(FOODS, FOODS_INFO);
+        TOURED_GOODS.put(WOODS, WOODS_INFO);
+        TOURED_GOODS.put(BUGS, BUGS_INFO);
+        TOURED_GOODS.put(HUMAN_REMAINS, HUMAN_REMAINS_INFO);
+        TOURED_GOODS.put(CIRRUS, CIRRUS_INFO);
+        TOURED_GOODS.put(STONE, STONE_INFO);
+    }
+
+    @Override
+    public Map<Good[], Integer[]> getHuntedGoods() {
+        return HUNTED_GOODS;
+    }
+
+    @Override
+    public Map<Good[], Integer[]> getTouredGoods() {
+        return TOURED_GOODS;
     }
 }

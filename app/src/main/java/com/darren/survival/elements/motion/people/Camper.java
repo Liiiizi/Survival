@@ -1,12 +1,12 @@
 package com.darren.survival.elements.motion.people;
 
-import com.darren.survival.elements.Survival;
+import com.darren.survival.elements.Survivor;
 
 /**
  * Created by Darren on 2015/12/11 0011.
  */
 public class Camper implements Campable {
-    private Survival protagonist = null;
+    private Survivor protagonist = null;
 
     private static boolean CAMPED = false;
 
@@ -18,7 +18,7 @@ public class Camper implements Campable {
     }
 
     private Camper() {
-        protagonist = Survival.getInstance();
+        protagonist = Survivor.getInstance();
         CAMPED = false;
     }
 

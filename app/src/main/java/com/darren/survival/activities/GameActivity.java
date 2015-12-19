@@ -9,15 +9,20 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import com.darren.survival.elements.Survival;
 import com.darren.survival.R;
+import com.darren.survival.elements.Survivor;
+import com.darren.survival.elements.good.Rabbit;
+import com.darren.survival.elements.good.Snake;
+import com.darren.survival.elements.good.Squirrel;
 
 public class GameActivity extends AppCompatActivity {
-    private Survival survival = null;
+    private Survivor survivor = null;
 
     private Button btnHurry = null;
     private Button btnFire = null;
+    private Button btnHunt = null;
     private TextView txtScene = null;
     private TextView txtDistance = null;
 
@@ -31,9 +36,11 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private void init() {
-        survival = Survival.getInstance();
+        survivor = Survivor.getInstance();
+        survivor.init();
         btnHurry =(Button)findViewById(R.id.btnHurry);
         btnFire = (Button)findViewById(R.id.btnFire);
+        btnHunt = (Button)findViewById(R.id.btnHunt);
         txtScene = (TextView)findViewById(R.id.txtScene);
         txtDistance = (TextView)findViewById(R.id.txtDistance);
         setBtnOnClick();
@@ -41,16 +48,17 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private void setTextView() {
-        System.out.println(survival.getScene().toString());
-        String[] strings = survival.getScene().getClass().getName().split("\\.");
+        System.out.println(survivor.getScene().toString());
+        String[] strings = survivor.getScene().getClass().getName().split("\\.");
         txtScene.setText(strings[strings.length - 1]);
-        txtDistance.setText(survival.getScene().getLength() + "");
+        txtDistance.setText(survivor.getScene().getLength() + "");
     }
 
     private void setBtnOnClick() {
         BtnOnClickAdapter onClickListener = new BtnOnClickAdapter();
         btnHurry.setOnClickListener(onClickListener);
         btnFire.setOnClickListener(onClickListener);
+        btnHunt.setOnClickListener(onClickListener);
 
     }
 
@@ -61,7 +69,7 @@ public class GameActivity extends AppCompatActivity {
 
     private void test() {
         for(;;) {
-            survival.getHurrier().hurry();
+            survivor.getHurrier().hurry();
             setTextView();
         }
     }
@@ -100,15 +108,24 @@ public class GameActivity extends AppCompatActivity {
                 case R.id.btnFire:
                     fire();
                     break;
+                case R.id.btnHunt:
+                    hunt();
+                    break;
+
             }
         }
         private void hurry() {
-            survival.getHurrier().hurry();
+            survivor.getHurrier().hurry();
             setTextView();
         }
 
         private void fire() {
-            survival.getFirer().fire();
+            survivor.getFirer().fire();
+            setTextView();
+        }
+
+        private void hunt() {
+            survivor.getHunter().hunt();
             setTextView();
         }
     }

@@ -1,12 +1,17 @@
 package com.darren.survival.elements.motion.people;
 
-import com.darren.survival.elements.Survival;
+import com.darren.survival.elements.Survivor;
+import com.darren.survival.elements.model.Good;
+import com.darren.survival.utls.RandomUtil;
+
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * Created by Darren on 2015/12/11 0011.
  */
-public class Hunter implements Hurryable {
-    private Survival protagonist = null;
+public class Hunter implements Huntable {
+    private Survivor survivor = null;
 
     private static Hunter ourInstance = new Hunter();
 
@@ -15,16 +20,23 @@ public class Hunter implements Hurryable {
     }
 
     private Hunter() {
-        protagonist = Survival.getInstance();
+        survivor = Survivor.getInstance();
 
     }
 
     @Override
-    public void hurry() {
-        protagonist.getCalorie().change(CALORIE);
-        protagonist.getWater().change(WATER);
-        protagonist.getTemperature().change(TEMPERATURE);
-        protagonist.getVigor().change(VIGOR);
-        protagonist.getTime().change(TIME);
+    public List<Good> hunt() {
+        survivor.getCalorie().change(CALORIE);
+        survivor.getWater().change(WATER);
+        survivor.getTemperature().change(TEMPERATURE);
+        survivor.getVigor().change(VIGOR);
+        survivor.getTime().change(TIME);
+        List<Good> goods = RandomUtil.randomGoods(survivor.getScene(), this);
+        for(Iterator<Good> it = goods.iterator(); it.hasNext();) {
+            Good good = it.next();
+            good.setCOUNT(good.getCOUNT() + 1);
+        }
+        return goods;
+
     }
 }

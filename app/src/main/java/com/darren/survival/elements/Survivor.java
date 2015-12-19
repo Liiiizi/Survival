@@ -20,7 +20,7 @@ import com.darren.survival.elements.parameters.Water;
  * Created by Darren on 2015/12/7 0007.
  * fire部分待修正
  */
-public class Survival {
+public class Survivor {
     private Calorie calorie = null;
     private Water water = null;
     private Temperature temperature = null;
@@ -40,9 +40,16 @@ public class Survival {
     private Scene scene = null;
 
 
-    private static Survival protagonist = new Survival();
+    private static Survivor protagonist = new Survivor();
 
-    private Survival() {
+    private Survivor() {
+        //初始化场景，生成第一个场景
+        scene = new Scene();
+        scene = scene.getNext();
+
+    }
+
+    public void init() {
         //得到各属性类的实例
         calorie = Calorie.getInstance();
         water = water.getInstance();
@@ -59,12 +66,9 @@ public class Survival {
         packer = Packer.getInstance();
         restor = Restor.getInstance();
         tourer = Tourer.getInstance();
-        //初始化场景，生成第一个场景
-        scene = new Scene();
-        scene = scene.getNext();
     }
 
-    public static Survival getInstance() {
+    public static Survivor getInstance() {
         return protagonist;
     }
 

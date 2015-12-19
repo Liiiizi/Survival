@@ -1,6 +1,24 @@
 package com.darren.survival.elements.scene;
 
+import com.darren.survival.elements.good.Branch;
+import com.darren.survival.elements.good.Bug;
+import com.darren.survival.elements.good.Cirrus;
+import com.darren.survival.elements.good.Lighter;
+import com.darren.survival.elements.good.Mouse;
+import com.darren.survival.elements.good.Rabbit;
+import com.darren.survival.elements.good.Rope;
+import com.darren.survival.elements.good.Sawdust;
+import com.darren.survival.elements.good.Snake;
+import com.darren.survival.elements.good.Squirrel;
+import com.darren.survival.elements.good.Stone;
+import com.darren.survival.elements.good.TreatedWater;
+import com.darren.survival.elements.good.Water;
+import com.darren.survival.elements.good.Wire;
+import com.darren.survival.elements.model.Good;
 import com.darren.survival.elements.model.Scene;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by Darren on 2015/12/6 0006.
@@ -9,6 +27,27 @@ public class Jungle extends Scene {
     //nextScene：可能的下一场景 nextSceneWeight:每个场景可能出现的权重
     public final String[] nextScene = {"Forest", "Plains", "River", "Lake"};
     public final int[] nextSceneWeight = {1, 1, 1, 1};
+    //获得物品相关
+    private static final Good[] BUGS = {Bug.getInstance()};
+    private static final Integer[] BUGS_INFO = {60, 3};
+    private static final Good[] FOODS = {Squirrel.getInstance(), Rabbit.getInstance(), Mouse.getInstance(), Snake.getInstance()};
+    private static final Integer[] FOODS_INFO = {30, 3};
+    private static final Good[] TREATED_WATER = {TreatedWater.getInstance()};
+    private static final Integer[] TREATED_WATER_INFO = {90, 1};
+    private static final Good[] WATER = {Water.getInstance()};
+    private static final Integer[] WATER_INFO = {10, 1};
+    private static final Good[] BRANCH = {Branch.getInstance()};
+    private static final Integer[] BRANCH_INFO = {10, 1};
+    private static final Good[] SAWDUST = {Sawdust.getInstance()};
+    private static final Integer[] SAWDUST_INFO = {5, 1};
+    private static final Good[] CIRRUS = {Cirrus.getInstance()};
+    private static final Integer[] CIRRUS_INFO = {70, 1};
+    private static final Good[] HUMAN_REMAINS = {Rope.getInstance(), Lighter.getInstance(), Wire.getInstance()};
+    private static final Integer[] HUMAN_REMAINS_INFO = {10, 1};
+    private static final Good[] STONE = {Stone.getInstance()};
+    private static final Integer[] STONE_INFO = {70, 1};
+    private static final Map<Good[], Integer[]> HUNTED_GOODS = new HashMap<>();
+    private static final Map<Good[], Integer[]> TOURED_GOODS = new HashMap<>();
     //此场景类的名字
     public static final String Type = "Jungle";
     //此场景的下一场景是否可能为终点场景
@@ -27,6 +66,7 @@ public class Jungle extends Scene {
     private Jungle() {
         setLength(20);
         speed = 1;
+        initGoods();
     }
 
     //单例模式
@@ -57,4 +97,27 @@ public class Jungle extends Scene {
     public int getSpeed() {
         return speed;
     }
+
+    private void initGoods() {
+        HUNTED_GOODS.put(BUGS, BUGS_INFO);
+        HUNTED_GOODS.put(FOODS, FOODS_INFO);
+        TOURED_GOODS.put(TREATED_WATER, TREATED_WATER_INFO);
+        TOURED_GOODS.put(WATER, WATER_INFO);
+        TOURED_GOODS.put(BRANCH, BRANCH_INFO);
+        TOURED_GOODS.put(SAWDUST, SAWDUST_INFO);
+        TOURED_GOODS.put(CIRRUS, CIRRUS_INFO);
+        TOURED_GOODS.put(HUMAN_REMAINS, HUMAN_REMAINS_INFO);
+        TOURED_GOODS.put(STONE, STONE_INFO);
+    }
+
+    @Override
+    public Map<Good[], Integer[]> getHuntedGoods() {
+        return HUNTED_GOODS;
+    }
+
+    @Override
+    public Map<Good[], Integer[]> getTouredGoods() {
+        return TOURED_GOODS;
+    }
+
 }

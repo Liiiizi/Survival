@@ -1,13 +1,13 @@
 package com.darren.survival.elements.motion.people;
 
-import com.darren.survival.elements.Survival;
+import com.darren.survival.elements.Survivor;
 import com.darren.survival.elements.model.Scene;
 
 /**
  * Created by Darren on 2015/12/11 0011.
  */
 public class Hurrier implements Hurryable {
-    private Survival protagonist = null;
+    private Survivor protagonist = null;
     Scene scene = null;
     Firer firer = null;
 
@@ -18,7 +18,7 @@ public class Hurrier implements Hurryable {
     }
 
     private Hurrier() {
-        protagonist = Survival.getInstance();
+        protagonist = Survivor.getInstance();
         scene = protagonist.getScene();
         firer = Firer.getInstance();
     }
@@ -35,6 +35,7 @@ public class Hurrier implements Hurryable {
         if (scene.getLength() <= 0) {
             scene.setLength(20);
             protagonist.setScene(scene.getNext());
+            scene = protagonist.getScene();
         }
     }
 }

@@ -1,6 +1,12 @@
 package com.darren.survival.utls;
 
+import com.darren.survival.elements.model.Good;
+import com.darren.survival.elements.model.Motion;
+import com.darren.survival.elements.model.Scene;
+
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 /**
@@ -56,6 +62,26 @@ public class RandomUtil {
             number -= weights[i];
             if (number <= 0) return items[i];
         }
+    }
+    /*
+    *scene:获取物品的场景
+    * good:将要获取的物品
+    * time:尝试获取的次数
+    * int:返回获取到的数量
+     */
+    public static List<Good> randomGoods(Scene scene, Motion motion) {
+        Map<Good[], Integer[]> goodsMap = scene.getGoods(motion);
+        List<Good> goods = new ArrayList<>();
+        for(Good[] key : goodsMap.keySet()) {
+            Integer[] values = goodsMap.get(key);
+            for(int i=0; i<values[1]; i++) {
+                if(r.nextInt(100) < values[0]) {
+                    Good good = key[r.nextInt(key.length)];
+                    goods.add(good);
+                }
+            }
+        }
+        return goods;
     }
 
 }

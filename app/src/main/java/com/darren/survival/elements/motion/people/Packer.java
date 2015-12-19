@@ -1,12 +1,12 @@
 package com.darren.survival.elements.motion.people;
 
-import com.darren.survival.elements.Survival;
+import com.darren.survival.elements.Survivor;
 
 /**
  * Created by Darren on 2015/12/11 0011.
  */
 public class Packer implements Packable {
-    private Survival protagonist = null;
+    private Survivor protagonist = null;
     private static Packer packer = new Packer();
 
     public static Packer getInstance() {
@@ -14,7 +14,7 @@ public class Packer implements Packable {
     }
 
     private Packer() {
-        protagonist = Survival.getInstance();
+        protagonist = Survivor.getInstance();
     }
 
     @Override

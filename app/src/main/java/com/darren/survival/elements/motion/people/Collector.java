@@ -1,6 +1,6 @@
 package com.darren.survival.elements.motion.people;
 
-import com.darren.survival.elements.Survival;
+import com.darren.survival.elements.Survivor;
 import com.darren.survival.elements.model.Good;
 import com.darren.survival.elements.model.Scene;
 
@@ -11,7 +11,7 @@ import java.util.Map;
  * Created by Darren on 2015/12/11 0011.
  */
 public class Collector implements Collectable {
-    private Survival protagonist = null;
+    private Survivor protagonist = null;
 
     private Map<Scene,HashMap<Good,Integer>> goods =new HashMap<Scene,HashMap<Good,Integer>>();
     private static Collector collector = new Collector();
@@ -21,7 +21,7 @@ public class Collector implements Collectable {
     }
 
     private Collector() {
-        protagonist = Survival.getInstance();
+        protagonist = Survivor.getInstance();
     }
 
     @Override
