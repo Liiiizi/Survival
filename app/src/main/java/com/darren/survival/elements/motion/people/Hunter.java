@@ -4,6 +4,7 @@ import com.darren.survival.elements.Survivor;
 import com.darren.survival.elements.model.Good;
 import com.darren.survival.utls.RandomUtil;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -12,6 +13,7 @@ import java.util.List;
  */
 public class Hunter implements Huntable {
     private Survivor survivor = null;
+    private List<Good> backpack = new ArrayList<>();
 
     private static Hunter ourInstance = new Hunter();
 
@@ -21,6 +23,7 @@ public class Hunter implements Huntable {
 
     private Hunter() {
         survivor = Survivor.getInstance();
+        backpack = survivor.getBackpack();
 
     }
 
@@ -35,6 +38,7 @@ public class Hunter implements Huntable {
         for(Iterator<Good> it = goods.iterator(); it.hasNext();) {
             Good good = it.next();
             good.setCOUNT(good.getCOUNT() + 1);
+            if(!backpack.contains(good)) backpack.add(good);
         }
         return goods;
 

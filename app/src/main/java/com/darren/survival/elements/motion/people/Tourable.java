@@ -1,6 +1,9 @@
 package com.darren.survival.elements.motion.people;
 
+import com.darren.survival.elements.model.Good;
 import com.darren.survival.elements.model.Motion;
+
+import java.util.List;
 
 /**
  * Created by Darren on 2015/12/7 0007.
@@ -13,5 +16,5 @@ public interface Tourable extends Motion {
     public static int VIGOR = -5;
     public static int TIME = -30;
 
-    public void tour();
+    public List<Good> tour();
 }

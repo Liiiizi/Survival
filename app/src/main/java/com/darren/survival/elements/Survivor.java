@@ -1,5 +1,6 @@
 package com.darren.survival.elements;
 
+import com.darren.survival.elements.model.Good;
 import com.darren.survival.elements.model.Scene;
 import com.darren.survival.elements.motion.people.Camper;
 import com.darren.survival.elements.motion.people.Collector;
@@ -15,6 +16,9 @@ import com.darren.survival.elements.parameters.Temperature;
 import com.darren.survival.elements.parameters.Time;
 import com.darren.survival.elements.parameters.Vigor;
 import com.darren.survival.elements.parameters.Water;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Darren on 2015/12/7 0007.
@@ -38,6 +42,8 @@ public class Survivor {
     private Tourer tourer = null;
 
     private Scene scene = null;
+
+    private List<Good> backpack = new ArrayList<>();
 
 
     private static Survivor protagonist = new Survivor();
@@ -134,5 +140,9 @@ public class Survivor {
 
     public Tourer getTourer() {
         return tourer;
+    }
+
+    public List<Good> getBackpack() {
+        return backpack;
     }
 }
