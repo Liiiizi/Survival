@@ -30,6 +30,6 @@ public class Bait extends Good implements Huntable {
 
     @Override
     public void setCOUNT(int COUNT) {
-        Bait.COUNT = COUNT;
+        Bait.COUNT += COUNT;
     }
 }

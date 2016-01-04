@@ -30,6 +30,6 @@ public class Antelope extends Good implements Makable {
 
     @Override
     public void setCOUNT(int COUNT) {
-        Antelope.COUNT = COUNT;
+        Antelope.COUNT += COUNT;
     }
 }

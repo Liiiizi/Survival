@@ -131,4 +131,9 @@ public class Scene {
         return null;
     }
 
+    public String getName() {
+        String[] strTemp = getClass().getName().toString().split("\\.");
+        String strName = strTemp[strTemp.length - 1];
+        return strName;
+    }
 }

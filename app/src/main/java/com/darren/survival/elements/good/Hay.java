@@ -35,5 +35,5 @@ public class Hay extends Good implements Fireable {
 
     @Override
     public void setCOUNT(int COUNT) {
-        this.COUNT = COUNT;
+        this.COUNT += COUNT;
     }}

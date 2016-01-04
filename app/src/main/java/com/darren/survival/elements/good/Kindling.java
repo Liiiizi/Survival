@@ -6,17 +6,17 @@ import com.darren.survival.elements.motion.good.Fireable;
 /**
  * Created by Darren on 2015/12/15 0015.
  */
-public class Kinding extends Good implements Fireable {
+public class Kindling extends Good implements Fireable {
     public static final double WEIGHT = 0.2;
     public static final int FIRE_TIME = 10;
     public static int COUNT = 0;
-    private static Kinding kinding = new Kinding();
+    private static Kindling kindling = new Kindling();
 
-    public static Kinding getInstance() {
-        return kinding;
+    public static Kindling getInstance() {
+        return kindling;
     }
 
-    private Kinding() {
+    private Kindling() {
     }
 
     @Override
@@ -36,6 +36,6 @@ public class Kinding extends Good implements Fireable {
 
     @Override
     public void setCOUNT(int COUNT) {
-        Kinding.COUNT = COUNT;
+        Kindling.COUNT += COUNT;
     }
 }

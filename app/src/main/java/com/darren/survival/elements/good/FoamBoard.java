@@ -30,6 +30,6 @@ public class FoamBoard extends Good implements Makable {
 
     @Override
     public void setCOUNT(int COUNT) {
-        FoamBoard.COUNT = COUNT;
+        FoamBoard.COUNT += COUNT;
     }
 }

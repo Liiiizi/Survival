@@ -1,12 +1,19 @@
 package com.darren.survival.elements.motion.people;
 
 import com.darren.survival.elements.Survivor;
+import com.darren.survival.elements.model.Motion;
 
 /**
  * Created by Darren on 2015/12/11 0011.
  */
-public class Camper implements Campable {
+public class Camper extends Motion {
     private Survivor protagonist = null;
+
+    public static int CALORIE = -300;
+    public  static int WATER = -5;
+    public static int TEMPERATURE = -5;
+    public static int VIGOR = -5;
+    public static int TIME = -30;
 
     private static boolean CAMPED = false;
 
@@ -23,13 +30,13 @@ public class Camper implements Campable {
     }
 
     @Override
-    public void camp() {
-        protagonist.getCalorie().change(CALORIE);
-        protagonist.getWater().change(WATER);
-        protagonist.getTemperature().change(TEMPERATURE);
-        protagonist.getVigor().change(VIGOR);
-        protagonist.getTime().change(TIME);
+    public void act() {
+       super.act();
         CAMPED = true;
+    }
+
+    public void camp() {
+
     }
 
     public static boolean isCAMPED() {
@@ -40,4 +47,28 @@ public class Camper implements Campable {
         Camper.CAMPED = CAMPED;
     }
 
+    @Override
+    public int getCALORIE() {
+        return CALORIE;
+    }
+
+    @Override
+    public int getWATER() {
+        return WATER;
+    }
+
+    @Override
+    public int getTEMPERATURE() {
+        return TEMPERATURE;
+    }
+
+    @Override
+    public int getVIGOR() {
+        return VIGOR;
+    }
+
+    @Override
+    public int getTIME() {
+        return TIME;
+    }
 }

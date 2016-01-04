@@ -30,6 +30,6 @@ public class FrozenBody extends Good implements Makable {
 
     @Override
     public void setCOUNT(int COUNT) {
-        FrozenBody.COUNT = COUNT;
+        FrozenBody.COUNT += COUNT;
     }
 }

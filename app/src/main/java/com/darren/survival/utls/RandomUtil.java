@@ -84,4 +84,8 @@ public class RandomUtil {
         return goods;
     }
 
+    public static boolean randomHappened(int pr) {
+        return r.nextInt(100) < pr;
+    }
+
 }

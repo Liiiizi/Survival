@@ -31,6 +31,6 @@ public class MouseMeat extends Good implements Makable, Eatable {
 
     @Override
     public void setCOUNT(int COUNT) {
-        MouseMeat.COUNT = COUNT;
+        MouseMeat.COUNT += COUNT;
     }
 }

@@ -30,6 +30,6 @@ public class Fur extends Good implements Makable {
 
     @Override
     public void setCOUNT(int COUNT) {
-        Fur.COUNT = COUNT;
+        Fur.COUNT += COUNT;
     }
 }

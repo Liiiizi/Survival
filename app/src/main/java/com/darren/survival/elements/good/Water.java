@@ -33,7 +33,7 @@ public class Water extends Good implements Eatable {
 
     @Override
     public void setCOUNT(int COUNT) {
-        Water.COUNT = COUNT;
+        Water.COUNT += COUNT;
     }
 
     public int getCALORIE() {

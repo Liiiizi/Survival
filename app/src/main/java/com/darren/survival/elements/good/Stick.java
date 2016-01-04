@@ -29,6 +29,6 @@ public class Stick extends Good {
 
     @Override
     public void setCOUNT(int COUNT) {
-        Stick.COUNT = COUNT;
+        Stick.COUNT += COUNT;
     }
 }

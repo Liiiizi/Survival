@@ -30,6 +30,6 @@ public class Gasoline extends Good implements Makable {
 
     @Override
     public void setCOUNT(int COUNT) {
-        Gasoline.COUNT = COUNT;
+        Gasoline.COUNT += COUNT;
     }
 }

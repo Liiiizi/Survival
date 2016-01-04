@@ -36,6 +36,6 @@ public class FireStick extends Good implements Fireable {
 
     @Override
     public void setCOUNT(int COUNT) {
-        FireStick.COUNT = COUNT;
+        FireStick.COUNT += COUNT;
     }
 }

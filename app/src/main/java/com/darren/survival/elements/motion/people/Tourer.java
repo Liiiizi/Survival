@@ -1,8 +1,8 @@
 package com.darren.survival.elements.motion.people;
 
 
-import com.darren.survival.elements.Survivor;
 import com.darren.survival.elements.model.Good;
+import com.darren.survival.elements.model.Motion;
 import com.darren.survival.utls.RandomUtil;
 
 import java.util.ArrayList;
@@ -12,8 +12,13 @@ import java.util.List;
 /**
  * Created by Darren on 2015/12/11 0011.
  */
-public class Tourer implements Tourable {
-    private Survivor survivor = null;
+public class Tourer extends Motion {
+    public static int CALORIE = -300;
+    public  static int WATER = -9;
+    public static int TEMPERATURE = -5;
+    public static int VIGOR = -5;
+    public static int TIME = -30;
+
     private List<Good> backpack = new ArrayList<>();
 
     private Camper camper = null;
@@ -21,9 +26,9 @@ public class Tourer implements Tourable {
     public static Tourer tourer = new Tourer();
 
     private Tourer() {
-        survivor = Survivor.getInstance();
+       super();
         camper = Camper.getInstance();
-        backpack = survivor.getBackpack();
+        backpack = getSurvivor().getBackpack();
     }
 
     public static Tourer getInstance() {
@@ -31,19 +36,39 @@ public class Tourer implements Tourable {
     }
 
     @Override
-    public List<Good> tour() {
+    public void act() {
+       super.act();
         camper.setCAMPED(false);
-        survivor.getCalorie().change(CALORIE);
-        survivor.getWater().change(WATER);
-        survivor.getTemperature().change(TEMPERATURE);
-        survivor.getVigor().change(VIGOR);
-        survivor.getTime().change(TIME);
-        List<Good> goods = RandomUtil.randomGoods(survivor.getScene(), this);
+        List<Good> goods = RandomUtil.randomGoods(getSurvivor().getScene(), this);
         for(Iterator<Good> it = goods.iterator(); it.hasNext();) {
             Good good = it.next();
-            good.setCOUNT(good.getCOUNT() + 1);
+            good.setCOUNT(+ 1);
             if(!backpack.contains(good)) backpack.add(good);
         }
-        return goods;
+    }
+
+    @Override
+    public int getCALORIE() {
+        return CALORIE;
+    }
+
+    @Override
+    public int getWATER() {
+        return WATER;
+    }
+
+    @Override
+    public int getTEMPERATURE() {
+        return TEMPERATURE;
+    }
+
+    @Override
+    public int getVIGOR() {
+        return VIGOR;
+    }
+
+    @Override
+    public int getTIME() {
+        return TIME;
     }
 }

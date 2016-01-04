@@ -17,6 +17,12 @@ public class Good {
     }
 
     public void setCOUNT(int COUNT) {
-        this.COUNT = COUNT;
+        this.COUNT += COUNT;
+    }
+
+    public String getName() {
+        String[] strTemp = getClass().getName().toString().split("\\.");
+        String strName = strTemp[strTemp.length - 1];
+        return strName;
     }
 }

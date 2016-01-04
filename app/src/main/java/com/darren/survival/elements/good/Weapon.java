@@ -30,6 +30,6 @@ public class Weapon extends Good implements Huntable {
 
     @Override
     public void setCOUNT(int COUNT) {
-        Weapon.COUNT = COUNT;
+        Weapon.COUNT += COUNT;
     }
 }

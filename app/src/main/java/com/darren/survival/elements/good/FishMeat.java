@@ -31,6 +31,6 @@ public class FishMeat extends Good implements Makable, Eatable {
 
     @Override
     public void setCOUNT(int COUNT) {
-        FishMeat.COUNT = COUNT;
+        FishMeat.COUNT += COUNT;
     }
 }

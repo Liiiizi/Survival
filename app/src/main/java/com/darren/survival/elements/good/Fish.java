@@ -30,6 +30,6 @@ public class Fish extends Good implements Makable {
 
     @Override
     public void setCOUNT(int COUNT) {
-        Fish.COUNT = COUNT;
+        Fish.COUNT += COUNT;
     }
 }

@@ -37,6 +37,6 @@ public class Sawdust extends Good implements Getable, Fireable {
 
     @Override
     public void setCOUNT(int COUNT) {
-        this.COUNT = COUNT;
+        this.COUNT += COUNT;
     }
 }

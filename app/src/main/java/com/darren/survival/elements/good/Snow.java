@@ -31,6 +31,6 @@ public class Snow extends Good implements Makable, Eatable {
 
     @Override
     public void setCOUNT(int COUNT) {
-        Snow.COUNT = COUNT;
+        Snow.COUNT += COUNT;
     }
 }

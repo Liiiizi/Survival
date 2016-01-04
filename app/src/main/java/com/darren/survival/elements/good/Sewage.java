@@ -16,4 +16,19 @@ public class Sewage extends Good {
 
     private Sewage() {
     }
+
+    @Override
+    public double getWEIGHT() {
+        return WEIGHT;
+    }
+
+    @Override
+    public int getCOUNT() {
+        return COUNT;
+    }
+
+    @Override
+    public void setCOUNT(int COUNT) {
+        this.COUNT += COUNT;
+    }
 }

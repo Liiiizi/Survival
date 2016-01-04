@@ -30,6 +30,6 @@ public class CookedMouseMeat extends Good implements Eatable {
 
     @Override
     public void setCOUNT(int COUNT) {
-        CookedMouseMeat.COUNT = COUNT;
+        CookedMouseMeat.COUNT += COUNT;
     }
 }

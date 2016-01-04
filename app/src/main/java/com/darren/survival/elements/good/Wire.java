@@ -29,6 +29,6 @@ public class Wire extends Good implements Makable {
 
     @Override
     public void setCOUNT(int COUNT) {
-        this.COUNT = COUNT;
+        this.COUNT += COUNT;
     }
 }

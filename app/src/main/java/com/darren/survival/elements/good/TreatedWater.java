@@ -30,6 +30,6 @@ public class TreatedWater extends Good implements Makable {
 
     @Override
     public void setCOUNT(int COUNT) {
-        TreatedWater.COUNT = COUNT;
+        TreatedWater.COUNT += COUNT;
     }
 }

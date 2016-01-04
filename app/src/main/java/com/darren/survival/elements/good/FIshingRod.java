@@ -30,6 +30,6 @@ public class FIshingRod extends Good implements Huntable {
 
     @Override
     public void setCOUNT(int COUNT) {
-        FIshingRod.COUNT = COUNT;
+        FIshingRod.COUNT += COUNT;
     }
 }

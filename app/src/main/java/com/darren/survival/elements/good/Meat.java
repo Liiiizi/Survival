@@ -31,6 +31,6 @@ public static int COUNT = 0;
 
         @Override
         public void setCOUNT(int COUNT) {
-            Meat.COUNT = COUNT;
+            Meat.COUNT += COUNT;
         }
 }

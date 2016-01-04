@@ -30,6 +30,6 @@ public class Squirrel extends Good implements Makable {
 
     @Override
     public void setCOUNT(int COUNT) {
-        Squirrel.COUNT = COUNT;
+        Squirrel.COUNT += COUNT;
     }
 }

@@ -24,6 +24,11 @@ public class BackpackAdapter extends BaseAdapter {
         this.backpack = backpack;
     }
 
+    public void setData(List<Good> goods) {
+        this.backpack = goods;
+        notifyDataSetChanged();
+    }
+
     @Override
     public int getCount() {
         return backpack == null ? 0 : backpack.size();
@@ -54,7 +59,6 @@ public class BackpackAdapter extends BaseAdapter {
         String strCount = good.getCOUNT() + "";
         goodName.setText(strName);
         goodCount.setText(strCount);
-
 
         return convertView;
     }

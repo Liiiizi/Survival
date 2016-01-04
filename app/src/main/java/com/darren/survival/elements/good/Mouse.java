@@ -30,6 +30,6 @@ public class Mouse extends Good implements Makable {
 
     @Override
     public void setCOUNT(int COUNT) {
-        Mouse.COUNT = COUNT;
+        Mouse.COUNT += COUNT;
     }
 }

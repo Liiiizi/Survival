@@ -29,6 +29,6 @@ public class Boat extends Good {
 
     @Override
     public void setCOUNT(int COUNT) {
-        Boat.COUNT = COUNT;
+        Boat.COUNT += COUNT;
     }
 }

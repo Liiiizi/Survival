@@ -38,6 +38,6 @@ public class Firewood extends Good implements Fireable, Makable, Getable {
 
     @Override
     public void setCOUNT(int COUNT) {
-        this.COUNT = COUNT;
+        this.COUNT += COUNT;
     }
 }

@@ -31,6 +31,6 @@ public class SnakeMeat extends Good implements Makable, Eatable {
 
     @Override
     public void setCOUNT(int COUNT) {
-        SnakeMeat.COUNT = COUNT;
+        SnakeMeat.COUNT += COUNT;
     }
 }

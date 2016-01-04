@@ -1,9 +1,10 @@
 package com.darren.survival.elements;
 
+import com.darren.survival.elements.good.Branch;
+import com.darren.survival.elements.good.Firewood;
 import com.darren.survival.elements.model.Good;
 import com.darren.survival.elements.model.Scene;
 import com.darren.survival.elements.motion.people.Camper;
-import com.darren.survival.elements.motion.people.Collector;
 import com.darren.survival.elements.motion.people.Firer;
 import com.darren.survival.elements.motion.people.Hunter;
 import com.darren.survival.elements.motion.people.Hurrier;
@@ -32,7 +33,6 @@ public class Survivor {
     private Time time = null;
 
     private Camper camper = null;
-    private Collector collector = null;
     private Firer firer = null;
     private Hunter hunter = null;
     private Hurrier hurrier =null;
@@ -44,7 +44,6 @@ public class Survivor {
     private Scene scene = null;
 
     private List<Good> backpack = new ArrayList<>();
-
 
     private static Survivor protagonist = new Survivor();
 
@@ -64,7 +63,6 @@ public class Survivor {
         time =Time.getInstance();
         //得到各行为类的实例
         camper = Camper.getInstance();
-        collector = Collector.getInstance();
         firer = Firer.getInstance();
         hunter = Hunter.getInstance();
         hurrier = Hurrier.getInstance();
@@ -72,6 +70,8 @@ public class Survivor {
         packer = Packer.getInstance();
         restor = Restor.getInstance();
         tourer = Tourer.getInstance();
+        backpack.add(Branch.getInstance());
+        backpack.add(Firewood.getInstance());
     }
 
     public static Survivor getInstance() {
@@ -108,10 +108,6 @@ public class Survivor {
 
     public Camper getCamper() {
         return camper;
-    }
-
-    public Collector getCollector() {
-        return collector;
     }
 
     public Firer getFirer() {

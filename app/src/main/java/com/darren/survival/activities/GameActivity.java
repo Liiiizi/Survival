@@ -1,94 +1,105 @@
 package com.darren.survival.activities;
 
+import android.app.Fragment;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
+import android.content.Context;
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.widget.Button;
-import android.widget.GridView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
-import com.darren.survival.Adapter.BackpackAdapter;
 import com.darren.survival.R;
 import com.darren.survival.elements.Survivor;
-import com.darren.survival.elements.model.Good;
+import com.darren.survival.fragment.BackpackFragment;
+import com.darren.survival.fragment.ChooseFragment;
+import com.darren.survival.fragment.ElementFragment;
+import com.darren.survival.fragment.MotionFragment;
 
-import java.util.List;
 
-public class GameActivity extends AppCompatActivity {
+
+public class GameActivity extends AppCompatActivity implements ElementFragment.ElementFOnClickListener, BackpackFragment.BackpackFOnClicklistener, MotionFragment.MotionFOnClickListener,
+        ChooseFragment.ChooseFOnClickListener {
     private Survivor survivor = null;
 
-    private LinearLayout mainLayout = null;
-    private LinearLayout backpackLayout = null;
-    private Button btnHurry = null;
-    private Button btnFire = null;
-    private Button btnHunt = null;
-    private Button btnTour = null;
-    private Button btnBackpack = null;
-    private Button btnbpBack = null;
-    private TextView txtScene = null;
-    private TextView txtDistance = null;
+    private FragmentManager fm;
+    private FragmentTransaction transaction;
 
-    private List<Good> backpack = null;
-    private GridView backpackView = null;
-    private BackpackAdapter backpackAdater = null;
+    private BackpackFragment bpFragment;
+    private ChooseFragment chooseFragment;
+    private ElementFragment elementFragment;
+    private MotionFragment motionFragment;
 
+    private Fragment leftFragment;
+    private Fragment rightFragment;
+
+    private ViewGroup mainlayout;
+
+    public static void actionStart(Context context) {
+        Intent intent = new Intent(context, GameActivity.class);
+        context.startActivity(intent);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        survivor = Survivor.getInstance();
+        survivor.init();//由于Survivor类于其他类获取实例的种种关系，必须在界面加载前进行初始化
         setContentView(R.layout.activity_game);
-        setScreen();
         init();
+        setScreen();
     }
 
     private void init() {
-        survivor = Survivor.getInstance();
-        survivor.init();
-        mainLayout = (LinearLayout)findViewById(R.id.mainLayout);
-        backpackLayout = (LinearLayout) findViewById(R.id.backpackLayout);
-        btnHurry =(Button)findViewById(R.id.btnHurry);
-        btnFire = (Button)findViewById(R.id.btnFire);
-        btnHunt = (Button)findViewById(R.id.btnHunt);
-        btnTour = (Button)findViewById(R.id.btnTour);
-        btnBackpack = (Button)findViewById(R.id.btnBackpack);
-        btnbpBack = (Button)findViewById(R.id.btnbpBack);
-        txtScene = (TextView)findViewById(R.id.txtScene);
-        txtDistance = (TextView)findViewById(R.id.txtDistance);
-        setBtnOnClick();
-        initBackpack();
-        setTextView();
-    }
 
-    private void initBackpack() {
-        backpack = survivor.getBackpack();
-        backpackView = (GridView)findViewById(R.id.backpackView);
-        backpackAdater = new BackpackAdapter(this, backpack);
-        backpackView.setAdapter(backpackAdater);
+        fm = getFragmentManager();
 
-    }
+        bpFragment = new BackpackFragment();
+        chooseFragment = new ChooseFragment();
+        elementFragment = new ElementFragment();
+        motionFragment = new MotionFragment();
 
-    private void setTextView() {
-        System.out.println(survivor.getScene().toString());
-        String[] strings = survivor.getScene().getClass().getName().split("\\.");
-        txtScene.setText(strings[strings.length - 1]);
-        txtDistance.setText(survivor.getScene().getLength() + "");
-        backpackAdater.notifyDataSetChanged();
-    }
+        transaction = fm.beginTransaction();
+        transaction.add(R.id.rightLayout, bpFragment);
+        transaction.hide(bpFragment);
+        transaction.add(R.id.rightLayout, chooseFragment);
+        transaction.hide(chooseFragment);
 
-    private void setBtnOnClick() {
-        BtnOnClickAdapter onClickListener = new BtnOnClickAdapter();
-        btnHurry.setOnClickListener(onClickListener);
-        btnFire.setOnClickListener(onClickListener);
-        btnHunt.setOnClickListener(onClickListener);
-        btnTour.setOnClickListener(onClickListener);
-        btnBackpack.setOnClickListener(onClickListener);
-        btnbpBack.setOnClickListener(onClickListener);
+        transaction.add(R.id.leftLayout, elementFragment);
+        leftFragment = elementFragment;
+        transaction.add(R.id.rightLayout, motionFragment);
+        rightFragment = motionFragment;
+        transaction.commit();
 
+        final Handler handler = new Handler() {
+            @Override
+            public void handleMessage(Message msg) {
+                super.handleMessage(msg);
+                notifyDataSetChanged();
+            }
+        };
+
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                for(;;) {
+                    handler.sendEmptyMessage(0);
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        });
+        thread.start();
     }
 
     private void setScreen() {
@@ -96,11 +107,102 @@ public class GameActivity extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
     }
 
-    private void test() {
-        for(;;) {
-            survivor.getHurrier().hurry();
-            setTextView();
+    @Override
+    public void elementFOnClick(View v) {
+        int id = v.getId();
+        switch (id) {
+            case R.id.btnBackpack:
+                if (rightFragment != elementFragment) {
+                    transaction = fm.beginTransaction();
+                    transaction.hide(rightFragment);
+                    transaction.show(bpFragment);
+                    rightFragment = bpFragment;
+                    transaction.commit();
+                }
+                break;
         }
+    }
+
+    @Override
+    public void backpackFOnClick(View v) {
+        int id = v.getId();
+        switch (id) {
+            case R.id.btnSure:
+                transaction = fm.beginTransaction();
+                transaction.hide(rightFragment);
+                transaction.show(motionFragment);
+                rightFragment = motionFragment;
+                transaction.commit();
+                break;
+        }
+    }
+
+    @Override
+    public void MotionFOnClick(View v) {
+        int id = v.getId();
+        switch (id) {
+            case R.id.btnFire:
+                if(rightFragment != chooseFragment) replaceRightFragment(chooseFragment);
+                if(survivor.getFirer().getFireTimeLeft() > 0) {
+                    chooseFragment.setChooseList(survivor.getFirer().getFireables(), ChooseFragment.CHOOSE_LIST_TYPE_FIREABLE, true);
+                } else {
+                    chooseFragment.setChooseList(survivor.getFirer().getKINDLINGS(), ChooseFragment.CHOOSE_LIST_TYPE_KINDLINGS, true);
+                    replaceRightFragment(chooseFragment);
+                }
+
+        }
+    }
+
+    @Override
+    public void chooseFOnClick(View v) {
+        int id = v.getId();
+        switch (id) {
+            case R.id.btnSure:
+                switch (chooseFragment.getChooseListType()) {
+                    case ChooseFragment.CHOOSE_LIST_TYPE_KINDLINGS:
+                        chooseFragment.setChooseList(survivor.getFirer().getINFLAMMABLE(), ChooseFragment.CHOOSE_LIST_TYPE_INFLAMMABLE, false);
+                        break;
+                    case ChooseFragment.CHOOSE_LIST_TYPE_INFLAMMABLE:
+                        survivor.getFirer().startFire(chooseFragment.getChoices().get(0), chooseFragment.getChoices().get(1));
+                        chooseFragment.setChooseList(survivor.getFirer().getFireables(), ChooseFragment.CHOOSE_LIST_TYPE_FIREABLE, true);
+                        break;
+                    case ChooseFragment.CHOOSE_LIST_TYPE_FIREABLE:
+                        survivor.getFirer().fire(chooseFragment.getChoices().get(0));
+                        onBackPressed();
+                        break;
+                }
+        }
+    }
+
+    private void notifyDataSetChanged() {
+        elementFragment.notifyDataSetChanged();
+    }
+
+    private void replaceLeftFragment(Fragment newLeftFragment) {
+        transaction = fm.beginTransaction();
+        transaction.hide(leftFragment);
+        transaction.show(newLeftFragment);
+        leftFragment = newLeftFragment;
+        transaction.commit();
+    }
+
+    private void replaceRightFragment(Fragment newRightFragment) {
+        transaction = fm.beginTransaction();
+        transaction.hide(rightFragment);
+        transaction.show(newRightFragment);
+        rightFragment = newRightFragment;
+        transaction.commit();
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (rightFragment != motionFragment) {
+            transaction = fm.beginTransaction();
+            transaction.hide(rightFragment);
+            transaction.show(motionFragment);
+            rightFragment = motionFragment;
+            transaction.commit();
+        } else super.onBackPressed();
     }
 
     @Override
@@ -125,61 +227,4 @@ public class GameActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private class BtnOnClickAdapter implements View.OnClickListener {
-
-        @Override
-        public void onClick(View view) {
-            int id = view.getId();
-            switch (id) {
-                case R.id.btnHurry:
-                   hurry();
-                    break;
-                case R.id.btnFire:
-                    fire();
-                    break;
-                case R.id.btnHunt:
-                    hunt();
-                    break;
-                case R.id.btnBackpack:
-                    backpack();
-                    break;
-                case R.id.btnbpBack:
-                    bpBack();
-                    break;
-                case R.id.btnTour:
-                    Tour();
-                    break;
-            }
-        }
-        private void hurry() {
-            survivor.getHurrier().hurry();
-            setTextView();
-        }
-
-        private void fire() {
-            survivor.getFirer().fire();
-            setTextView();
-        }
-
-        private void hunt() {
-            survivor.getHunter().hunt();
-            setTextView();
-        }
-
-        private void Tour() {
-            survivor.getTourer().tour();
-            setTextView();
-        }
-
-        private void backpack() {
-            mainLayout.setVisibility(LinearLayout.GONE);
-            backpackLayout.setVisibility(LinearLayout.VISIBLE);
-        }
-
-        private void bpBack() {
-            backpackLayout.setVisibility(LinearLayout.GONE);
-            mainLayout.setVisibility(LinearLayout.VISIBLE);
-        }
-
-    }
 }

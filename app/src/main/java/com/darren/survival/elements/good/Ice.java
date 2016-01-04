@@ -34,7 +34,7 @@ public class Ice extends Good implements Eatable, Makable {
 
     @Override
     public void setCOUNT(int COUNT) {
-        Ice.COUNT = COUNT;
+        Ice.COUNT += COUNT;
     }
 
     public int getCALORIE() {

@@ -31,6 +31,6 @@ public class SquirrelMeat extends Good implements Makable, Eatable {
 
     @Override
     public void setCOUNT(int COUNT) {
-        SquirrelMeat.COUNT = COUNT;
+        SquirrelMeat.COUNT += COUNT;
     }
 }

@@ -30,6 +30,6 @@ public class Rabbit extends Good implements Makable {
 
     @Override
     public void setCOUNT(int COUNT) {
-        Rabbit.COUNT = COUNT;
+        Rabbit.COUNT += COUNT;
     }
 }

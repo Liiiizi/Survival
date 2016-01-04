@@ -29,6 +29,6 @@ public class Souvenir extends Good {
 
     @Override
     public void setCOUNT(int COUNT) {
-        Souvenir.COUNT = COUNT;
+        Souvenir.COUNT += COUNT;
     }
 }

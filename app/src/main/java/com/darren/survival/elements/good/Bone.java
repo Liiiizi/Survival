@@ -30,6 +30,6 @@ public class Bone extends Good implements Makable {
 
     @Override
     public void setCOUNT(int COUNT) {
-        Bone.COUNT = COUNT;
+        Bone.COUNT += COUNT;
     }
 }
