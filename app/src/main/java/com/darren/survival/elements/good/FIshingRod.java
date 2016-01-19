@@ -9,10 +9,12 @@ import com.darren.survival.elements.motion.good.Huntable;
 public class FIshingRod extends Good implements Huntable {
     public static final double WEIGHT = 2;
     public static int COUNT = 0;
-    private static FIshingRod fIshingRod = new FIshingRod();
+    public static final String ID = "HT3";
+    public int test = 0;
+    private static FIshingRod fishingRod = new FIshingRod();
 
     public static FIshingRod getInstance() {
-        return fIshingRod;
+        return fishingRod;
     }
 
     private FIshingRod() {
@@ -31,5 +33,10 @@ public class FIshingRod extends Good implements Huntable {
     @Override
     public void setCOUNT(int COUNT) {
         FIshingRod.COUNT += COUNT;
+    }
+
+    @Override
+    public String getID() {
+        return ID;
     }
 }
