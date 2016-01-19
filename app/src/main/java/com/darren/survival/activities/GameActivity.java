@@ -41,7 +41,7 @@ public class GameActivity extends AppCompatActivity implements ElementFragment.E
     private MakeFragment makeFragment;
     private SceneFragment sceneFragment;
 
-    private Fragment TopFragment;
+    private Fragment topFragment;
     private Fragment leftFragment;
     private Fragment rightFragment;
 
@@ -95,7 +95,7 @@ public class GameActivity extends AppCompatActivity implements ElementFragment.E
         transaction.add(R.id.rightLayout, motionFragment);
         rightFragment = motionFragment;
         transaction.add(R.id.topLayout, sceneFragment);
-        TopFragment = sceneFragment;
+        topFragment = sceneFragment;
         transaction.commit();
 
         localBroadcastManager = LocalBroadcastManager.getInstance(this);
