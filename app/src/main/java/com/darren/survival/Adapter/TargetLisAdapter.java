@@ -16,13 +16,13 @@ import java.util.List;
 /**
  * Created by Darren on 2016/1/12 0012.
  */
-public class TargetLiAdapter extends BaseAdapter {
+public class TargetLisAdapter extends BaseAdapter {
     private LayoutInflater inflater;
     private List<Good> targets;
 
     private int selectedPosition = -1;//选中项的position，未选中时默认为-1
 
-    public TargetLiAdapter(Context context, List<Good> targets) {
+    public TargetLisAdapter(Context context, List<Good> targets) {
         inflater = LayoutInflater.from(context);
         this.targets = targets;
     }
