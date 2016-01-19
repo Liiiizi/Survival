@@ -11,7 +11,7 @@ import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import com.darren.survival.Adapter.MaterialLisAdapter;
+import com.darren.survival.Adapter.MaterialMaterialMaterial;
 import com.darren.survival.Adapter.TargetLisAdapter;
 import com.darren.survival.R;
 import com.darren.survival.elements.model.Good;
@@ -32,7 +32,7 @@ public class MakeFragment extends Fragment {
     private ListView materialList;
 
     private TargetLisAdapter targetListAdapter;
-    private MaterialLisAdapter materialListAdapter;
+    private MaterialMaterialMaterial materialListAdapter;
 
     private List<Good> targets;
 
@@ -84,7 +84,7 @@ public class MakeFragment extends Fragment {
             }
         });
 
-        materialListAdapter = new MaterialLisAdapter(getActivity(), recipeMap.get(targets.get(0).getID()));
+        materialListAdapter = new MaterialMaterialMaterial(getActivity(), recipeMap.get(targets.get(0).getID()));
         materialList.setAdapter(materialListAdapter);
 
     }
