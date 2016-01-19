@@ -1,14 +1,5 @@
 package com.darren.survival.elements.scene;
 
-import com.darren.survival.elements.good.Bottle;
-import com.darren.survival.elements.good.Branch;
-import com.darren.survival.elements.good.Firewood;
-import com.darren.survival.elements.good.Fish;
-import com.darren.survival.elements.good.FoamBoard;
-import com.darren.survival.elements.good.Sawdust;
-import com.darren.survival.elements.good.Stone;
-import com.darren.survival.elements.good.TreatedWater;
-import com.darren.survival.elements.good.Water;
 import com.darren.survival.elements.model.Good;
 import com.darren.survival.elements.model.Scene;
 
@@ -20,30 +11,24 @@ import java.util.Map;
  */
 public class River extends Scene {
     //nextScene：可能的下一场景 nextSceneWeight:每个场景可能出现的权重
-    public static final String[] nextScene = {"Forest", "Plains", "Jungle", "Lake"};
-    public static final int[] nextSceneWeight = {1, 1, 1, 1};
+    public final Map<Scene, Integer> nextScene = new HashMap<>();
     //获得物品相关
-    private static final Good[] FOODS = {Fish.getInstance()};
+    private static final Good[] FOODS = {Good.fish};
     private static final Integer[] FOODS_INFO = {30, 4};
-    private static final Good[] WATER = {Water.getInstance()};
+    private static final Good[] WATER = {Good.water};
     private static final Integer[] WATER_INFO = {50, 1};
-    private static final Good[] TREATED_WATER = {TreatedWater.getInstance()};
+    private static final Good[] TREATED_WATER = {Good.treatedWater};
     private static final Integer[] TREATED_WATER_INFO = {50, 1};
-    private static final Good[] BOTTLE = {Bottle.getInstance()};
+    private static final Good[] BOTTLE = {Good.bottle};
     private static final Integer[] BOTTLE_INFO = {10, 1};
-    private static final Good[] FOAM_BOARD = {FoamBoard.getInstance()};
+    private static final Good[] FOAM_BOARD = {Good.foamBoard};
     private static final Integer[] FOAM_BOTTLE_INFO = {5, 1};
-    private static final Good[] WOODS = {Branch.getInstance(), Firewood.getInstance(), Sawdust.getInstance()};
+    private static final Good[] WOODS = {Good.branch, Good.firewood, Good.sawdust};
     private static final Integer[] WOODS_INFO = {20, 1};
-    private static final Good[] STONE = {Stone.getInstance()};
+    private static final Good[] STONE = {Good.stone};
     private static final Integer[] STONE_INFO = {70, 1};
     private static final Map<Good[], Integer[]> HUNTED_GOODS = new HashMap<>();
     private static final Map<Good[], Integer[]> TOURED_GOODS = new HashMap<>();
-    //此场景类的名字
-    public static final String Type = "River";
-    //此场景的下一场景是否可能为终点场景
-    public final String CanBEnd = "both";
-
     //此场景的最小及最大长度
     private final int minLength = 10;
     private final int maxLength = 20;
@@ -51,6 +36,7 @@ public class River extends Scene {
     private int length;
     //此场景的移动速度
     private int speed;
+    public static final String ID = "SC4";
     //单例模式
     private static River river = new River();
 
@@ -58,6 +44,7 @@ public class River extends Scene {
     private River() {
         setLength(20);
         speed = 2;
+
         initGoods();
     }
 
@@ -66,12 +53,14 @@ public class River extends Scene {
         return river;
     }
 
-    public String[] getNextScene() {
+    public Map<Scene, Integer> getNextScene() {
+        if(nextScene.isEmpty()) {
+            nextScene.put(Scene.forest, 1);
+            nextScene.put(Scene.plains, 1);
+            nextScene.put(Scene.jungle, 1);
+            nextScene.put(Scene.lake, 1);
+        }
         return nextScene;
-    }
-
-    public int[] getNextSceneWeight() {
-        return nextSceneWeight;
     }
 
     public String getCanBEnd() {
@@ -90,7 +79,13 @@ public class River extends Scene {
         return speed;
     }
 
-    private void initGoods() {
+    @Override
+    public String getID() {
+        return ID;
+    }
+
+    @Override
+    protected void initGoods() {
         HUNTED_GOODS.put(FOODS, FOODS_INFO);
         TOURED_GOODS.put(WATER, WATER_INFO);
         TOURED_GOODS.put(TREATED_WATER, TREATED_WATER_INFO);

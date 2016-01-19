@@ -9,6 +9,7 @@ import com.darren.survival.elements.motion.good.Huntable;
 public class Weapon extends Good implements Huntable {
     public static final double WEIGHT = 2;
     public static int COUNT = 0;
+    public static final String ID = "HT4";
     private static Weapon weapon = new Weapon();
 
     public static Weapon getInstance() {
@@ -31,5 +32,10 @@ public class Weapon extends Good implements Huntable {
     @Override
     public void setCOUNT(int COUNT) {
         Weapon.COUNT += COUNT;
+    }
+
+    @Override
+    public String getID() {
+        return ID;
     }
 }

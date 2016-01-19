@@ -10,6 +10,7 @@ import android.widget.Button;
 
 import com.darren.survival.R;
 import com.darren.survival.elements.Survivor;
+import com.darren.survival.elements.model.Parameter;
 import com.darren.survival.widget.elementWidget;
 
 /**
@@ -24,10 +25,6 @@ public class ElementFragment extends Fragment implements View.OnClickListener {
     private elementWidget txtWater;
     private elementWidget txtVigor;
     private elementWidget txtTime;
-    private elementWidget txtScene;
-    private elementWidget txtDistance;
-    private elementWidget txtFireTime;
-    private elementWidget txtCamped;
 
     private Button btnBackpack;
 
@@ -50,22 +47,14 @@ public class ElementFragment extends Fragment implements View.OnClickListener {
         txtWater = (elementWidget)view.findViewById(R.id.txtWater);
         txtVigor = (elementWidget)view.findViewById(R.id.txtVigor);
         txtTime = (elementWidget)view.findViewById(R.id.txtTime);
-        txtScene = (elementWidget)view.findViewById(R.id.txtScene);
-        txtDistance = (elementWidget)view.findViewById(R.id.txtDistance);
-        txtFireTime = (elementWidget)view.findViewById(R.id.txtFireTime);
-        txtCamped = (elementWidget)view.findViewById(R.id.txtCamped);
 
         btnBackpack = (Button)view.findViewById(R.id.btnBackpack);
 
-        txtCalorie.setMassage(survivor.getCalorie());
-        txtTemperature.setMassage(survivor.getTemperature());
-        txtWater.setMassage(survivor.getWater());
-        txtVigor.setMassage(survivor.getVigor());
-        txtTime.setMassage(survivor.getTime());
-        txtScene.setMassage(survivor.getScene());
-        txtDistance.setMassage("Distance",survivor.getScene().getLength() + "");
-        txtFireTime.setMassage("FireTime", survivor.getFirer().getFireTimeLeft() + "");
-        txtCamped.setMassage("Camped", survivor.getCamper().isCAMPED() + "");
+        txtCalorie.setMassage(Parameter.calorie);
+        txtTemperature.setMassage(Parameter.temperature);
+        txtWater.setMassage(Parameter.water);
+        txtVigor.setMassage(Parameter.vigor);
+        txtTime.setMassage(Parameter.time);
 
         btnBackpack.setOnClickListener(this);
     }
@@ -83,15 +72,11 @@ public class ElementFragment extends Fragment implements View.OnClickListener {
     }
 
     public void notifyDataSetChanged() {
-        txtCalorie.setMassage(survivor.getCalorie());
-        txtTemperature.setMassage(survivor.getTemperature());
-        txtWater.setMassage(survivor.getWater());
-        txtVigor.setMassage(survivor.getVigor());
-        txtTime.setMassage(survivor.getTime());
-        txtScene.setMassage(survivor.getScene());
-        txtDistance.setMassage("Distance",survivor.getScene().getLength() + "");
-        txtFireTime.setMassage("FireTime", survivor.getFirer().getFireTimeLeft() + "");
-        txtCamped.setMassage("Camped", survivor.getCamper().isCAMPED() + "");
+        txtCalorie.setMassage(Parameter.calorie);
+        txtTemperature.setMassage(Parameter.temperature);
+        txtWater.setMassage(Parameter.water);
+        txtVigor.setMassage(Parameter.vigor);
+        txtTime.setMassage(Parameter.time);
     }
 
     public interface ElementFOnClickListener {

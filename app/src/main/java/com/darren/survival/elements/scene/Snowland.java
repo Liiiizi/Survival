@@ -1,12 +1,5 @@
 package com.darren.survival.elements.scene;
 
-import com.darren.survival.elements.good.Antelope;
-import com.darren.survival.elements.good.Branch;
-import com.darren.survival.elements.good.Firewood;
-import com.darren.survival.elements.good.FrozenBody;
-import com.darren.survival.elements.good.Rabbit;
-import com.darren.survival.elements.good.Snow;
-import com.darren.survival.elements.good.Stone;
 import com.darren.survival.elements.model.Good;
 import com.darren.survival.elements.model.Scene;
 
@@ -18,27 +11,22 @@ import java.util.Map;
  */
 public class Snowland extends Scene {
     //nextScene：可能的下一场景 nextSceneWeight:每个场景可能出现的权重
-    public final String[] nextScene = {"Mountain", "River", "Jungle"};
-    public final int[] nextSceneWeight = {1, 1, 1};
+    public final Map<Scene, Integer> nextScene = new HashMap<>();
     //获得物品相关
-    private static final Good[] RABBIT = {Rabbit.getInstance()};
+    private static final Good[] RABBIT = {Good.rabbit};
     private static final Integer[] RABBIT_INFO = {20, 3};
-    private static final Good[] ANTELOPE = {Antelope.getInstance()};
+    private static final Good[] ANTELOPE = {Good.antelope};
     private static final Integer[] ANTELOPE_INFO = {5, 1};
-    private static final Good[] SNOW = {Snow.getInstance()};
+    private static final Good[] SNOW = {Good.snow};
     private static final Integer[] SNOW_INFO = {100, 1};
-    private static final Good[] FROZEN_BODY = {FrozenBody.getInstance()};
+    private static final Good[] FROZEN_BODY = {Good.frozenBody};
     private static final Integer[] FROZEN_BODY_INFO = {5, 1};
-    private static final Good[] WOODS = {Branch.getInstance(), Firewood.getInstance()};
+    private static final Good[] WOODS = {Good.branch, Good.firewood};
     private static final Integer[] WOODS_INFO = {10, 1};
-    private static final Good[] STONE = {Stone.getInstance()};
+    private static final Good[] STONE = {Good.stone};
     private static final Integer[] STONE_INFO = {50, 1};
     private static final Map<Good[], Integer[]> HUNTED_GOODS = new HashMap<>();
     private static final Map<Good[], Integer[]> TOURED_GOODS = new HashMap<>();
-    //此场景类的名字
-    public static final String Type = "Snowland";
-    //此场景的下一场景是否可能为终点场景
-    public static final String CanBEnd = "none";
     //此场景的最小及最大长度
     private static final int minLength = 20;
     private static final int maxLength = 30;
@@ -46,6 +34,7 @@ public class Snowland extends Scene {
     private int length;
     //此场景的移动速度
     private int speed;
+    public static final String ID = "SC6";
     //单例模式
     private static Snowland snowland = new Snowland();
 
@@ -53,6 +42,7 @@ public class Snowland extends Scene {
     private Snowland() {
         setLength(20);
         speed = 1;
+
         initGoods();
     }
 
@@ -61,12 +51,13 @@ public class Snowland extends Scene {
         return snowland;
     }
 
-    public String[] getNextScene() {
+    public Map<Scene, Integer> getNextScene() {
+        if(nextScene.isEmpty()) {
+            nextScene.put(Scene.mountain, 1);
+            nextScene.put(Scene.river, 1);
+            nextScene.put(Scene.jungle, 1);
+        }
         return nextScene;
-    }
-
-    public int[] getNextSceneWeight() {
-        return nextSceneWeight;
     }
 
     public String getCanBEnd() {
@@ -85,7 +76,13 @@ public class Snowland extends Scene {
         return speed;
     }
 
-    private void initGoods() {
+    @Override
+    public String getID() {
+        return ID;
+    }
+
+    @Override
+    protected void initGoods() {
         HUNTED_GOODS.put(RABBIT, RABBIT_INFO);
         HUNTED_GOODS.put(ANTELOPE, ANTELOPE_INFO);
         TOURED_GOODS.put(SNOW, SNOW_INFO);

@@ -9,6 +9,7 @@ import com.darren.survival.elements.motion.good.Makable;
 public class Rabbit extends Good implements Makable {
     public static final double WEIGHT = 1;
     public static int COUNT = 0;
+    public static final String ID = "WK11";
     private static Rabbit ourInstance = new Rabbit();
 
     public static Rabbit getInstance() {
@@ -31,5 +32,10 @@ public class Rabbit extends Good implements Makable {
     @Override
     public void setCOUNT(int COUNT) {
         Rabbit.COUNT += COUNT;
+    }
+
+    @Override
+    public String getID() {
+        return ID;
     }
 }

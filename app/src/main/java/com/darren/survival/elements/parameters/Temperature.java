@@ -20,8 +20,13 @@ public class Temperature extends Parameter{
         return temperature;
     }
 
+    @Override
+    public int getValue() {
+        return value;
+    }
 
-    public void change(int value) {
-        this.value += value;
+    @Override
+    public void setValue(int value) {
+        this.value = value;
     }
 }

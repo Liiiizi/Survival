@@ -26,7 +26,7 @@ public class Firer extends Motion {
 
     private static int FIRE_TIME_LEFT;
 
-    private List<Good> KINDLINGS = new ArrayList<>();//火种
+    private List<Good> KINDLING = new ArrayList<>();//火种
     private List<Good> INFLAMMABLE = new ArrayList<>();//易燃物
 
     private List<Good> fireables = new ArrayList<>();//可燃物，添加燃料时使用
@@ -41,8 +41,8 @@ public class Firer extends Motion {
         survivor = Survivor.getInstance();
         FIRE_TIME_LEFT = 0;
 
-        KINDLINGS.add(Branch.getInstance());
-        KINDLINGS.add(Kindling.getInstance());
+        KINDLING.add(Branch.getInstance());
+        KINDLING.add(Kindling.getInstance());
         INFLAMMABLE.add(Sawdust.getInstance());
         INFLAMMABLE.add(Hay.getInstance());
     }
@@ -99,8 +99,8 @@ public class Firer extends Motion {
         return TIME;
     }
 
-    public List<Good> getKINDLINGS() {
-        return KINDLINGS;
+    public List<Good> getKINDLING() {
+        return KINDLING;
     }
 
     public List<Good> getINFLAMMABLE() {

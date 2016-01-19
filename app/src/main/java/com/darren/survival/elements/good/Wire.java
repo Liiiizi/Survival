@@ -9,6 +9,7 @@ import com.darren.survival.elements.motion.good.Makable;
 public class Wire extends Good implements Makable {
     public static final double WEIGHT = 0.01;
     public static int COUNT = 0;
+    public static final String ID = "WK3";
     private static Wire wire = new Wire();
 
     public static Wire getInstance() {
@@ -30,5 +31,10 @@ public class Wire extends Good implements Makable {
     @Override
     public void setCOUNT(int COUNT) {
         this.COUNT += COUNT;
+    }
+
+    @Override
+    public String getID() {
+        return ID;
     }
 }

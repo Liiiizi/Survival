@@ -23,14 +23,33 @@ public class RandomUtil {
         return r.nextBoolean();
     }
 
-    /*
+    /**
+     * 根据权重随机
+     * @param itemMap T为随即项，Integer为该项的权重
+     * @param <T> 随机项
+     * @return 随机到的对象
+     */
+    public static <T> T randomByWeight(Map<T, Integer> itemMap) {
+        int total = 0;
+        for(int i : itemMap.values()) {
+            total += i;
+        }
+        int random = nextInt(total);
+        for(Map.Entry<T, Integer> set : itemMap.entrySet()) {
+            random -= set.getValue();
+            if(random <= 0) return set.getKey();
+        }
+        return null;
+    }
+
+    /**
    * 按照顺序依次传入随机选项及其权重
    * eg:{A,1,B,2,C,1,D,2}
    * 没有进行异常处理 不要尝试传入错误参数
     */
     public static String randomByWeight(String[] items) {
-        ArrayList<String> itemList = new ArrayList<String>();
-        ArrayList<Integer> weightList = new ArrayList<Integer>();
+        ArrayList<String> itemList = new ArrayList<>();
+        ArrayList<Integer> weightList = new ArrayList<>();
         int total = 0;
         for (int i = 0; i < items.length; i++) {
             if (i % 2 == 0) itemList.add(items[i]);
@@ -46,7 +65,7 @@ public class RandomUtil {
             if (number <= 0) return itemList.get(i);
         }
     }
-    /*
+    /**
     *items： 随机选项
     * weight: 每个选项的权重
     * 没有进行异常处理 不要尝试传入错误参数
@@ -63,7 +82,7 @@ public class RandomUtil {
             if (number <= 0) return items[i];
         }
     }
-    /*
+    /**
     *scene:获取物品的场景
     * good:将要获取的物品
     * time:尝试获取的次数

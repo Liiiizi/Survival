@@ -9,6 +9,7 @@ import com.darren.survival.elements.motion.good.Makable;
 public class FrozenBody extends Good implements Makable {
     public static final double WEIGHT = 2;
     public static int COUNT = 0;
+    public static final String ID = "WK6";
     private static FrozenBody frozenBody = new FrozenBody();
 
     public static FrozenBody getInstance() {
@@ -31,5 +32,10 @@ public class FrozenBody extends Good implements Makable {
     @Override
     public void setCOUNT(int COUNT) {
         FrozenBody.COUNT += COUNT;
+    }
+
+    @Override
+    public String getID() {
+        return ID;
     }
 }

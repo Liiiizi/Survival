@@ -46,35 +46,6 @@
         android:gravity="center"
         android:layout_gravity="center"/>
 
-    <com.darren.survival.widget.elementWidget
-        android:id="@+id/txtScene"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:gravity="center"
-        android:layout_gravity="center"/>
-
-    <com.darren.survival.widget.elementWidget
-        android:id="@+id/txtDistance"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:gravity="center"
-        android:layout_gravity="center"/>
-
-    <com.darren.survival.widget.elementWidget
-        android:id="@+id/txtFireTime"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:gravity="center"
-        android:layout_gravity="center"/>
-
-    <com.darren.survival.widget.elementWidget
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/txtCamped"/>
-
     <Button
         android:id="@+id/btnBackpack"
         android:layout_width="wrap_content"

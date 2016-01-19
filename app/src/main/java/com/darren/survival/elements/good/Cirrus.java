@@ -9,6 +9,7 @@ import com.darren.survival.elements.motion.good.Makable;
 public class Cirrus extends Good implements Makable {
     public static final double WEIGHT = 0.5;
     public static int COUNT = 0;
+    public static final String ID = "WK1";
     private static Cirrus ourInstance = new Cirrus();
 
     public static Cirrus getInstance() {
@@ -31,5 +32,10 @@ public class Cirrus extends Good implements Makable {
     @Override
     public void setCOUNT(int COUNT) {
         this.COUNT += COUNT;
+    }
+
+    @Override
+    public String getID() {
+        return ID;
     }
 }

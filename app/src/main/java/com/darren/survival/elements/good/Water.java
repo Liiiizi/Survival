@@ -12,6 +12,7 @@ public class Water extends Good implements Eatable {
     public static final int CALORIE = 0;
     public static final int WATER = 20;
     public static final int TEMPERATURE = 0;
+    public static final String ID = "ET1";
     private static Water water = new Water();
 
     public static Water getInstance() {
@@ -34,6 +35,11 @@ public class Water extends Good implements Eatable {
     @Override
     public void setCOUNT(int COUNT) {
         Water.COUNT += COUNT;
+    }
+
+    @Override
+    public String getID() {
+        return ID;
     }
 
     public int getCALORIE() {

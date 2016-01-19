@@ -2,7 +2,9 @@ package com.darren.survival.fragment;
 
 
 import android.app.Fragment;
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.content.LocalBroadcastManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +12,7 @@ import android.widget.Button;
 
 import com.darren.survival.R;
 import com.darren.survival.elements.Survivor;
+import com.darren.survival.elements.model.Motion;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -23,8 +26,11 @@ public class MotionFragment extends Fragment {
     private Button btnHurry = null;
     private Button btnCamp = null;
     private Button btnRest = null;
+    private Button btnMake = null;
 
     private View view = null;
+
+    private LocalBroadcastManager localBroadcastManager;
 
     public MotionFragment() {
 
@@ -47,6 +53,7 @@ public class MotionFragment extends Fragment {
         btnHurry =(Button)view.findViewById(R.id.btnHurry);
         btnCamp = (Button)view.findViewById(R.id.btnCamp);
         btnRest = (Button)view.findViewById(R.id.btnRest);
+        btnMake = (Button)view.findViewById(R.id.btnMake);
 
         BtnOnClickAdapter onClickAdapter = new BtnOnClickAdapter();
         btnHunt.setOnClickListener(onClickAdapter);
@@ -55,6 +62,9 @@ public class MotionFragment extends Fragment {
         btnHurry.setOnClickListener(onClickAdapter);
         btnCamp.setOnClickListener(onClickAdapter);
         btnRest.setOnClickListener(onClickAdapter);
+        btnMake.setOnClickListener(onClickAdapter);
+
+        localBroadcastManager = LocalBroadcastManager.getInstance(getActivity());
     }
 
     public interface MotionFOnClickListener {
@@ -65,6 +75,9 @@ public class MotionFragment extends Fragment {
 
         @Override
         public void onClick(View v) {
+            if(getActivity() instanceof  MotionFOnClickListener) {
+                ((MotionFOnClickListener)getActivity()).MotionFOnClick(v);
+            }
             int id = v.getId();
             switch (id) {
                 case R.id.btnHunt:
@@ -74,7 +87,7 @@ public class MotionFragment extends Fragment {
                     tour();
                     break;
                 case R.id.btnFire:
-                    fire(v);
+                    fire();
                     break;
                 case R.id.btnHurry:
                     hurry();
@@ -85,34 +98,39 @@ public class MotionFragment extends Fragment {
                 case R.id.btnRest:
                     rest();
                     break;
+                case R.id.btnMake:
+                    make();
+                    break;
             }
+            Intent intent = new Intent("com.darren.survival.REFRESH_ELEMENTS");
+            localBroadcastManager.sendBroadcast(intent);
         }
 
         private void hunt() {
-            survivor.getHunter().act();
+            Motion.hunter.act();
         }
 
         private void tour() {
-            survivor.getTourer().act();
+            Motion.tourer.act();
         }
 
-        private void fire(View v) {
-            if(getActivity() instanceof  MotionFOnClickListener) {
-                ((MotionFOnClickListener)getActivity()).MotionFOnClick(v);
-            }
-            survivor.getFirer().act();
+        private void fire() {
+            Motion.firer.act();
         }
 
         private void hurry() {
-            survivor.getHurrier().act();
+            Motion.hurrier.act();
         }
 
         private void camp() {
-            survivor.getCamper().act();
+            Motion.camper.act();
         }
 
         private void rest() {
-            survivor.getRestor().act();
+            Motion.restor.act();
+        }
+
+        private void make() {
         }
     }
 

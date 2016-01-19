@@ -9,6 +9,7 @@ import com.darren.survival.elements.motion.good.Makable;
 public class Gasoline extends Good implements Makable {
     public static final double WEIGHT = 0.2;
     public static int COUNT = 0;
+    public static final String ID = "WK7";
     private static Gasoline gasoline = new Gasoline();
 
     public static Gasoline getInstance() {
@@ -31,5 +32,10 @@ public class Gasoline extends Good implements Makable {
     @Override
     public void setCOUNT(int COUNT) {
         Gasoline.COUNT += COUNT;
+    }
+
+    @Override
+    public String getID() {
+        return ID;
     }
 }

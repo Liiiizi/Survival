@@ -9,6 +9,7 @@ import com.darren.survival.elements.motion.good.Eatable;
 public class CookedRabbiteMeat extends Good implements Eatable {
     public static final double WEIGHT = 0.45;
     public static int COUNT = 0;
+    public static final String ID = "ET9";
     private static CookedRabbiteMeat cookedRabbiteMeat = new CookedRabbiteMeat();
 
     public static CookedRabbiteMeat getInstance() {
@@ -31,5 +32,10 @@ public class CookedRabbiteMeat extends Good implements Eatable {
     @Override
     public void setCOUNT(int COUNT) {
         CookedRabbiteMeat.COUNT += COUNT;
+    }
+
+    @Override
+    public String getID() {
+        return ID;
     }
 }

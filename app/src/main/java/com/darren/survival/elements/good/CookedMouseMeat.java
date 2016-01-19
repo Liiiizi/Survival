@@ -9,6 +9,7 @@ import com.darren.survival.elements.motion.good.Eatable;
 public class CookedMouseMeat extends Good implements Eatable {
     public static final double WEIGHT = 0.1;
     public static int COUNT = 0;
+    public static final String ID = "ET17";
     private static CookedMouseMeat cookedMouseMeat = new CookedMouseMeat();
 
     public static CookedMouseMeat getInstance() {
@@ -31,5 +32,10 @@ public class CookedMouseMeat extends Good implements Eatable {
     @Override
     public void setCOUNT(int COUNT) {
         CookedMouseMeat.COUNT += COUNT;
+    }
+
+    @Override
+    public String getID() {
+        return ID;
     }
 }

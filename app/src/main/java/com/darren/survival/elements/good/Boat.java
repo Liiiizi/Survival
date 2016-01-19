@@ -8,6 +8,7 @@ import com.darren.survival.elements.model.Good;
 public class Boat extends Good {
     public static final double WEIGHT = 0;
     public static int COUNT = 0;
+    public static final String ID = "WK19";
     private static Boat boat = new Boat();
 
     public static Boat getInstance() {
@@ -30,5 +31,10 @@ public class Boat extends Good {
     @Override
     public void setCOUNT(int COUNT) {
         Boat.COUNT += COUNT;
+    }
+
+    @Override
+    public String getID() {
+        return ID;
     }
 }

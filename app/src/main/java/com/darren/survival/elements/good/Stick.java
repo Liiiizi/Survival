@@ -8,6 +8,7 @@ import com.darren.survival.elements.model.Good;
 public class Stick extends Good {
     public static final double WEIGHT = 5;
     public static int COUNT = 0;
+    public static final String ID = "WK16";
     private static Stick stick = new Stick();
 
     public static Stick getInstance() {
@@ -30,5 +31,10 @@ public class Stick extends Good {
     @Override
     public void setCOUNT(int COUNT) {
         Stick.COUNT += COUNT;
+    }
+
+    @Override
+    public String getID() {
+        return ID;
     }
 }

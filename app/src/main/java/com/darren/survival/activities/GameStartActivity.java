@@ -23,8 +23,10 @@ public class GameStartActivity extends AppCompatActivity {
         init();
     }
 
+    /**
+     * 设置横屏和全屏
+     */
     private void init() {
-        //设置横屏 全屏
         if (getRequestedOrientation() != ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE) setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 

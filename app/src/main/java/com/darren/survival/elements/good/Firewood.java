@@ -12,6 +12,7 @@ public class Firewood extends Good implements Fireable, Makable, Getable {
     public static final double WEIGHT = 0.5;
     public static final int FIRE_TIME = 60;
     public static int COUNT = 0;
+    public static final String ID = "FR2";
     private static Firewood firewood = new Firewood();
 
     public static Firewood getInstance() {
@@ -39,5 +40,10 @@ public class Firewood extends Good implements Fireable, Makable, Getable {
     @Override
     public void setCOUNT(int COUNT) {
         this.COUNT += COUNT;
+    }
+
+    @Override
+    public String getID() {
+        return ID;
     }
 }

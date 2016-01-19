@@ -21,13 +21,13 @@ public class Tourer extends Motion {
 
     private List<Good> backpack = new ArrayList<>();
 
-    private Camper camper = null;
+    private Camper camper;
 
     public static Tourer tourer = new Tourer();
 
     private Tourer() {
        super();
-        camper = Camper.getInstance();
+        camper = (Camper)Motion.camper;
         backpack = getSurvivor().getBackpack();
     }
 

@@ -1,12 +1,5 @@
 package com.darren.survival.elements.scene;
 
-import com.darren.survival.elements.good.Branch;
-import com.darren.survival.elements.good.Firewood;
-import com.darren.survival.elements.good.Fish;
-import com.darren.survival.elements.good.FreshFish;
-import com.darren.survival.elements.good.Sawdust;
-import com.darren.survival.elements.good.Stone;
-import com.darren.survival.elements.good.Water;
 import com.darren.survival.elements.model.Good;
 import com.darren.survival.elements.model.Scene;
 
@@ -18,25 +11,20 @@ import java.util.Map;
  */
 public class Lake extends Scene {
     //nextScene：可能的下一场景 nextSceneWeight:每个场景可能出现的权重
-    public final String[] nextScene = {"Plains", "River"};
-    public final int[] nextSceneWeight = {1, 1};
+    public final Map<Scene, Integer> nextScene = new HashMap<>();
     //获得物品相关
-    private static final Good[] FISH = {Fish.getInstance()};
+    private static final Good[] FISH = {Good.fish};
     private static final Integer[] FISH_INFO = {30, 4};
-    private static final Good[] WATER = {Water.getInstance()};
+    private static final Good[] WATER = {Good.water};
     private static final Integer[] WATER_INFO = {99, 1};
-    private static final Good[] FRESH_FISH = {FreshFish.getInstance()};
+    private static final Good[] FRESH_FISH = {Good.freshFish};
     private static final Integer[] FRESH_FISH_INFO = {3, 1};
-    private static final Good[] WOODS = {Branch.getInstance(), Firewood.getInstance(), Sawdust.getInstance()};
+    private static final Good[] WOODS = {Good.branch, Good.firewood, Good.sawdust};
     private static final Integer[] WOODS_INFO = {20, 1};
-    private static final Good[] STONE = {Stone.getInstance()};
+    private static final Good[] STONE = {Good.stone};
     private static final Integer[] STONE_INFO = {70, 1};
     private static final Map<Good[], Integer[]> HUNTED_GOODS = new HashMap<>();
     private static final Map<Good[], Integer[]> TOURED_GOODS = new HashMap<>();
-    //此场景类的名字
-    public static final String Type = "Lake";
-    //此场景的下一场景是否可能为终点场景
-    public final String CanBEnd = "both";
     //此场景的最小及最大长度
     private static final int minLength = 10;
     private static final int maxLength = 20;
@@ -44,6 +32,7 @@ public class Lake extends Scene {
     private int length;
     //此场景的移动速度
     private int speed;
+    public static final String ID = "SC8";
     //单例模式
     private static Lake lake = new Lake();
 
@@ -51,6 +40,7 @@ public class Lake extends Scene {
     private Lake() {
         setLength(20);
         speed = 2;
+
         initGoods();
     }
 
@@ -59,12 +49,12 @@ public class Lake extends Scene {
         return lake;
     }
 
-    public String[] getNextScene() {
+    public Map<Scene, Integer> getNextScene() {
+        if(nextScene.isEmpty()) {
+            nextScene.put(Scene.plains, 1);
+            nextScene.put(Scene.river, 1);
+        }
         return nextScene;
-    }
-
-    public int[] getNextSceneWeight() {
-        return nextSceneWeight;
     }
 
     public String getCanBEnd() {
@@ -83,8 +73,13 @@ public class Lake extends Scene {
         return speed;
     }
 
+    @Override
+    public String getID() {
+        return ID;
+    }
 
-    private void initGoods() {
+    @Override
+    protected void initGoods() {
         HUNTED_GOODS.put(FISH, FISH_INFO);
         TOURED_GOODS.put(WATER, WATER_INFO);
         TOURED_GOODS.put(FRESH_FISH, FRESH_FISH_INFO);

@@ -10,6 +10,7 @@ public class Lighter extends Good implements Fireable {
     public static final double WEIGHT = 0.01;
     public static final int FIRE_TIME = 10;
     public static int COUNT = 0;
+    public static final String ID ="FR4";
     private static Lighter lighter = new Lighter();
 
     public static Lighter getInstance() {
@@ -37,5 +38,10 @@ public class Lighter extends Good implements Fireable {
     @Override
     public void setCOUNT(int COUNT) {
         this.COUNT += COUNT;
+    }
+
+    @Override
+    public String getID() {
+        return ID;
     }
 }

@@ -10,6 +10,7 @@ import com.darren.survival.elements.motion.good.Makable;
 public class MouseMeat extends Good implements Makable, Eatable {
     public static final double WEIGHT = 0.1;
     public static int COUNT = 0;
+    public static final String ID = "ET16";
     private static MouseMeat mouseMeat = new MouseMeat();
 
     public static MouseMeat getInstance() {
@@ -32,5 +33,10 @@ public class MouseMeat extends Good implements Makable, Eatable {
     @Override
     public void setCOUNT(int COUNT) {
         MouseMeat.COUNT += COUNT;
+    }
+
+    @Override
+    public String getID() {
+        return ID;
     }
 }

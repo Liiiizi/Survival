@@ -10,6 +10,7 @@ import com.darren.survival.elements.motion.good.Makable;
 public class SquirrelMeat extends Good implements Makable, Eatable {
     public static final double WEIGHT = 0.3;
     public static int COUNT = 0;
+    public static final String ID = "ET10";
     private static SquirrelMeat squirrelMeat = new SquirrelMeat();
 
     public static SquirrelMeat getInstance() {
@@ -32,5 +33,10 @@ public class SquirrelMeat extends Good implements Makable, Eatable {
     @Override
     public void setCOUNT(int COUNT) {
         SquirrelMeat.COUNT += COUNT;
+    }
+
+    @Override
+    public String getID() {
+        return ID;
     }
 }

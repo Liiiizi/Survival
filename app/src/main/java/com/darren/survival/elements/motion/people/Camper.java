@@ -7,16 +7,13 @@ import com.darren.survival.elements.model.Motion;
  * Created by Darren on 2015/12/11 0011.
  */
 public class Camper extends Motion {
-    private Survivor protagonist = null;
-
     public static int CALORIE = -300;
-    public  static int WATER = -5;
+    public static int WATER = -5;
     public static int TEMPERATURE = -5;
     public static int VIGOR = -5;
     public static int TIME = -30;
 
-    private static boolean CAMPED = false;
-
+    private boolean CAMPED = false;
 
     private static Camper ourInstance = new Camper();
 
@@ -25,7 +22,6 @@ public class Camper extends Motion {
     }
 
     private Camper() {
-        protagonist = Survivor.getInstance();
         CAMPED = false;
     }
 
@@ -39,12 +35,12 @@ public class Camper extends Motion {
 
     }
 
-    public static boolean isCAMPED() {
+    public boolean isCAMPED() {
         return CAMPED;
     }
 
-    public static void setCAMPED(boolean CAMPED) {
-        Camper.CAMPED = CAMPED;
+    public void setCAMPED(boolean CAMPED) {
+        this.CAMPED = CAMPED;
     }
 
     @Override

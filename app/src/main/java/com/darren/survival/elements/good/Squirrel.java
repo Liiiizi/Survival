@@ -9,6 +9,7 @@ import com.darren.survival.elements.motion.good.Makable;
 public class Squirrel extends Good implements Makable {
     public static final double WEIGHT = 0.5;
     public static int COUNT = 0;
+    public static final String ID = "WK12";
     private static Squirrel squirrel = new Squirrel();
 
     public static Squirrel getInstance() {
@@ -31,5 +32,10 @@ public class Squirrel extends Good implements Makable {
     @Override
     public void setCOUNT(int COUNT) {
         Squirrel.COUNT += COUNT;
+    }
+
+    @Override
+    public String getID() {
+        return ID;
     }
 }

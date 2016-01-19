@@ -16,12 +16,11 @@ import java.util.List;
  * Created by Darren on 2015/12/25 0025.
  */
 public class ChooseListAdapter extends BaseAdapter {
-    LayoutInflater inflater = null;
-    List<Good> choices = null;
+    LayoutInflater inflater;
+    List<Good> choices;
 
     public ChooseListAdapter(Context context) {
         inflater =LayoutInflater.from(context);
-        //choices = new ArrayList<>();
     }
 
     public ChooseListAdapter(Context context, List<Good> choices) {
@@ -29,6 +28,9 @@ public class ChooseListAdapter extends BaseAdapter {
         this.choices = choices;
     }
 
+    /**
+     * 重置列表中的数据
+     */
     public void setData(List<Good> choices) {
         this.choices = choices;
         notifyDataSetChanged();
@@ -55,15 +57,15 @@ public class ChooseListAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        TextView txtName = null;
-        TextView txtCount = null;
+        TextView txtName;
+        TextView txtCount;
         if(convertView == null) {
             convertView = inflater.inflate(R.layout.choose_list, null);
         }
         txtName = (TextView)convertView.findViewById(R.id.txtName);
         txtCount = (TextView)convertView.findViewById(R.id.txtCount);
         txtName.setText(choices.get(position).getName());
-        txtCount.setText(choices.get(position).getCOUNT() + "");
+        txtCount.setText(String.valueOf(choices.get(position).getCOUNT()));
 
         return convertView;
     }

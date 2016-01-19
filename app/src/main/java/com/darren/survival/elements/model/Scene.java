@@ -2,16 +2,33 @@ package com.darren.survival.elements.model;
 
 import com.darren.survival.elements.motion.people.Hunter;
 import com.darren.survival.elements.motion.people.Tourer;
+import com.darren.survival.elements.scene.Forest;
+import com.darren.survival.elements.scene.Iceberg;
+import com.darren.survival.elements.scene.Jungle;
+import com.darren.survival.elements.scene.Lake;
+import com.darren.survival.elements.scene.Mountain;
+import com.darren.survival.elements.scene.Plains;
+import com.darren.survival.elements.scene.River;
+import com.darren.survival.elements.scene.Snowland;
 import com.darren.survival.utls.RandomUtil;
 
-import java.lang.reflect.InvocationTargetException;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
+ * 所有场景类的父类
  * Created by Darren on 2015/12/6 0006.
  */
-public class Scene {
-
+public abstract class Scene {
+    //场景列表
+    public static final Scene forest = Forest.getInstance();
+    public static final Scene iceberg = Iceberg.getInstance();
+    public static final Scene jungle = Jungle.getInstance();
+    public static final Scene lake = Lake.getInstance();
+    public static final Scene mountain = Mountain.getInstance();
+    public static final Scene plains = Plains.getInstance();
+    public static final Scene river = River.getInstance();
+    public static final Scene snowland = Snowland.getInstance();
     //场景类的路径，用来根据String获得实例
     public static final String packagePath = "com.darren.survival.elements.scene.";
     //终点的概率
@@ -21,9 +38,8 @@ public class Scene {
     public static final int PROBABLITY10 = 50;
     public static final int PROBABLITY11 = 70;
     public static final int PROBABLITY12 = 100;
-    //nextScene：可能的下一场景 nextSceneWeight:每个场景可能出现的权重
-    public final String[] nextScene = {"Forest","Plains", "Mountain", "River", "Iceberg", "Snowland", "Jungle", "Lake"};
-    public final int[] nextSceneWeight = {1,1,1,1,1,1,1,1};
+    //可能的下一场景及每个场景可能出现的权重
+    public final static Map<Scene, Integer> nextScene = new HashMap<>();
     //场景类名字，用来重载
     public static final String Type = null;
     //此场景的下一场景是否可能为终点场景，用来重载
@@ -37,103 +53,79 @@ public class Scene {
     public static int count = 0;
     //此场景的移动速度
     private int speed;
+    /**
+     * 初始化sceneMap，用于通过物品id找到实例
+     */
+    private static Map<String, Scene> sceneMap = new HashMap<>();
+    static {
+        sceneMap.put(forest.getID(), forest);
+        sceneMap.put(iceberg.getID(), iceberg);
+        sceneMap.put(jungle.getID(), jungle);
+        sceneMap.put(lake.getID(), lake);
+        sceneMap.put(mountain.getID(), mountain);
+        sceneMap.put(plains.getID(), plains);
+        sceneMap.put(river.getID(), river);
+        sceneMap.put(snowland.getID(), snowland);
+    }
+
+    /**
+     * 通过场景ID找到对应的实例
+     * @param ID 打算寻找的场景ID
+     * @return 对应的实例
+     */
+    public static Scene findGoodById(String ID) {
+        return sceneMap.get(ID);
+    }
+
+    public static Scene getFirstScene() {
+        count++;//到达的场景数加1
+        if(nextScene.isEmpty()) {
+            nextScene.put(Scene.forest, 1);
+            nextScene.put(Scene.plains, 1);
+            nextScene.put(Scene.mountain, 1);
+            nextScene.put(Scene.river, 1);
+            nextScene.put(Scene.iceberg, 1);
+            nextScene.put(Scene.snowland, 1);
+            nextScene.put(Scene.jungle, 1);
+            nextScene.put(Scene.lake, 1);
+        }
+        return RandomUtil.randomByWeight(nextScene);//随机下一个到达的场景
+    }
     //下一随机场景
     public Scene getNext() {
-        count++;
-
-        String strScene = null;
-        String strEnd = RandomUtil.randomByWeight(new String[]{"none", getCanBEnd()}, new int[]{100 - getEndProbablity(), getEndProbablity()});
-        if(strEnd.equals("none")) {
-            strScene = RandomUtil.randomByWeight(getNextScene(), getNextSceneWeight());
-        } else {
-            String[] strEnds = null;
-            if(strEnd.equals("both")){
-                strScene = RandomUtil.randomByWeight(new String[]{"Road","Town"},new int[]{1,1});
-            } else {
-                strScene = strEnd;
-            }
-        }
-        Scene temp = null;
-        try {
-            temp = (Scene)Class.forName(packagePath + strScene).getMethod("getInstance").invoke(null);
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (InvocationTargetException e) {
-            e.printStackTrace();
-        } catch (NoSuchMethodException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-        return temp;
-    }
-    //终点场景出现的可能性
-    public int getEndProbablity() {
-        switch (count) {
-            case 1:
-            case 2:
-            case 3:
-                return PROBABLITY1_3;
-            case 4:
-            case 5:
-                return PROBABLITY4_5;
-            case 6:
-            case 7:
-            case 8:
-            case 9:
-                return PROBABLITY6_9;
-            case 10:
-                return PROBABLITY10;
-            case 11:
-                return PROBABLITY11;
-            case 12:
-                return PROBABLITY12;
-            default:
-                return PROBABLITY12;
-        }
+        count++;//到达的场景数加1
+        return RandomUtil.randomByWeight(getNextScene());//随机下一个到达的场景
     }
 
-    public String[] getNextScene() {
-        return nextScene;
-    }
+    abstract public Map<Scene, Integer> getNextScene();
+    abstract public int getLength();
+    abstract public void setLength(int length);
+    abstract public int getSpeed();
+    abstract public String getID();
+    /**
+     * 初始化一些行为可以获得的物品
+     */
+    abstract protected void initGoods();
+    abstract public Map<Good[], Integer[]> getHuntedGoods();
+    abstract public Map<Good[], Integer[]> getTouredGoods();
 
-    public int[] getNextSceneWeight() {
-        return nextSceneWeight;
-    }
-
-    public String getCanBEnd() {
-        return CanBEnd;
-    }
-
-    public int getLength() {
-        return length;
-    }
-
-    public void setLength(int length) {
-        this.length = length;
-    }
-
-    public int getSpeed() {
-        return speed;
-    }
-
-    public Map<Good[], Integer[]> getHuntedGoods() {
-        return null;
-    }
-
-    public Map<Good[], Integer[]> getTouredGoods() {
-        return null;
-    }
-
+    /**
+     * 根据motion的类型返回对应的物品列表
+     * @param motion 用来判断motion的类型
+     * @return 返回对应的物品列表
+     */
     public Map<Good[], Integer[]> getGoods(Motion motion) {
-        if(motion == Hunter.getInstance()) return getHuntedGoods();
-        if(motion == Tourer.getInstance()) return getTouredGoods();
+        if(motion instanceof Hunter) return getHuntedGoods();
+        if(motion instanceof Tourer) return getTouredGoods();
         return null;
     }
 
+    /**
+     * 获取此类用来显示的名字
+     * @return 用来显示的名字
+     */
     public String getName() {
-        String[] strTemp = getClass().getName().toString().split("\\.");
-        String strName = strTemp[strTemp.length - 1];
-        return strName;
+        String[] strTemp = getClass().getName().split("\\.");
+        return strTemp[strTemp.length - 1];
     }
 }

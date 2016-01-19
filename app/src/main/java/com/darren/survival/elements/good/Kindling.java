@@ -10,6 +10,7 @@ public class Kindling extends Good implements Fireable {
     public static final double WEIGHT = 0.2;
     public static final int FIRE_TIME = 10;
     public static int COUNT = 0;
+    public static final String ID ="FR6";
     private static Kindling kindling = new Kindling();
 
     public static Kindling getInstance() {
@@ -37,5 +38,10 @@ public class Kindling extends Good implements Fireable {
     @Override
     public void setCOUNT(int COUNT) {
         Kindling.COUNT += COUNT;
+    }
+
+    @Override
+    public String getID() {
+        return ID;
     }
 }

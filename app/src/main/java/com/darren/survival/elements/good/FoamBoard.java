@@ -9,6 +9,7 @@ import com.darren.survival.elements.motion.good.Makable;
 public class FoamBoard extends Good implements Makable {
     public static final double WEIGHT = 2;
     public static int COUNT = 0;
+    public static final String ID = "WK5";
     private static FoamBoard foamBoard = new FoamBoard();
 
     public static FoamBoard getInstance() {
@@ -31,5 +32,10 @@ public class FoamBoard extends Good implements Makable {
     @Override
     public void setCOUNT(int COUNT) {
         FoamBoard.COUNT += COUNT;
+    }
+
+    @Override
+    public String getID() {
+        return ID;
     }
 }

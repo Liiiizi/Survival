@@ -9,6 +9,7 @@ import com.darren.survival.elements.motion.good.Makable;
 public class FreshFish extends Good implements Makable {
     public static final double WEIGHT = 0.3;
     public static int COUNT = 0;
+    public static final String ID = "WK9";
     private static FreshFish freshFish = new FreshFish();
 
     public static FreshFish getInstance() {
@@ -31,5 +32,10 @@ public class FreshFish extends Good implements Makable {
     @Override
     public void setCOUNT(int COUNT) {
         FreshFish.COUNT += COUNT;
+    }
+
+    @Override
+    public String getID() {
+        return ID;
     }
 }

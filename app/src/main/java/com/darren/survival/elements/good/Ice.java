@@ -13,6 +13,7 @@ public class Ice extends Good implements Eatable, Makable {
     public static final int CALORIE = 0;
     public static final int WATER = 10;
     public static final int TEMPERATURE = -30;
+    public static final String ID = "ET2";
     private static Ice ice = new Ice();
 
     public static Ice getInstance() {
@@ -35,6 +36,11 @@ public class Ice extends Good implements Eatable, Makable {
     @Override
     public void setCOUNT(int COUNT) {
         Ice.COUNT += COUNT;
+    }
+
+    @Override
+    public String getID() {
+        return ID;
     }
 
     public int getCALORIE() {

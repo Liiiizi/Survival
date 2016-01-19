@@ -9,6 +9,7 @@ import com.darren.survival.elements.motion.good.Makable;
 public class TreatedWater extends Good implements Makable {
     public static final double WEIGHT = 0.5;
     public static int COUNT = 0;
+    public static final String ID = "WK8";
     private static TreatedWater treatedWater = new TreatedWater();
 
     public static TreatedWater getInstance() {
@@ -31,5 +32,10 @@ public class TreatedWater extends Good implements Makable {
     @Override
     public void setCOUNT(int COUNT) {
         TreatedWater.COUNT += COUNT;
+    }
+
+    @Override
+    public String getID() {
+        return ID;
     }
 }

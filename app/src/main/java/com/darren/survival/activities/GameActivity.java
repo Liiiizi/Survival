@@ -3,26 +3,28 @@ package com.darren.survival.activities;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.WindowManager;
 
 import com.darren.survival.R;
 import com.darren.survival.elements.Survivor;
+import com.darren.survival.elements.model.Motion;
 import com.darren.survival.fragment.BackpackFragment;
 import com.darren.survival.fragment.ChooseFragment;
 import com.darren.survival.fragment.ElementFragment;
+import com.darren.survival.fragment.MakeFragment;
 import com.darren.survival.fragment.MotionFragment;
-
+import com.darren.survival.fragment.SceneFragment;
 
 
 public class GameActivity extends AppCompatActivity implements ElementFragment.ElementFOnClickListener, BackpackFragment.BackpackFOnClicklistener, MotionFragment.MotionFOnClickListener,
@@ -36,12 +38,20 @@ public class GameActivity extends AppCompatActivity implements ElementFragment.E
     private ChooseFragment chooseFragment;
     private ElementFragment elementFragment;
     private MotionFragment motionFragment;
+    private MakeFragment makeFragment;
+    private SceneFragment sceneFragment;
 
+    private Fragment TopFragment;
     private Fragment leftFragment;
     private Fragment rightFragment;
 
-    private ViewGroup mainlayout;
-
+    private IntentFilter intentFilter;
+    private LocalBroadcastManager localBroadcastManager;
+    private LocalBroadcastReceiver localBroadcastReceiver;
+    /**
+     * 启动此activity
+     * @param context 上下文
+     */
     public static void actionStart(Context context) {
         Intent intent = new Intent(context, GameActivity.class);
         context.startActivity(intent);
@@ -50,14 +60,16 @@ public class GameActivity extends AppCompatActivity implements ElementFragment.E
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        survivor = Survivor.getInstance();
-        survivor.init();//由于Survivor类于其他类获取实例的种种关系，必须在界面加载前进行初始化
         setContentView(R.layout.activity_game);
         init();
         setScreen();
     }
 
+    /**
+     * 初始化
+     */
     private void init() {
+        survivor = Survivor.getInstance();
 
         fm = getFragmentManager();
 
@@ -65,48 +77,45 @@ public class GameActivity extends AppCompatActivity implements ElementFragment.E
         chooseFragment = new ChooseFragment();
         elementFragment = new ElementFragment();
         motionFragment = new MotionFragment();
+        makeFragment = new MakeFragment();
+        sceneFragment = new SceneFragment();
 
-        transaction = fm.beginTransaction();
+        transaction = fm.beginTransaction();//开启事物
+        //将所有将会用到的fragment加入到其应该出现的位置，但不显示
         transaction.add(R.id.rightLayout, bpFragment);
         transaction.hide(bpFragment);
         transaction.add(R.id.rightLayout, chooseFragment);
         transaction.hide(chooseFragment);
+        transaction.add(R.id.rightLayout, makeFragment);
+        transaction.hide(makeFragment);
 
+        //主界面默认布局
         transaction.add(R.id.leftLayout, elementFragment);
         leftFragment = elementFragment;
         transaction.add(R.id.rightLayout, motionFragment);
         rightFragment = motionFragment;
+        transaction.add(R.id.topLayout, sceneFragment);
+        TopFragment = sceneFragment;
         transaction.commit();
 
-        final Handler handler = new Handler() {
-            @Override
-            public void handleMessage(Message msg) {
-                super.handleMessage(msg);
-                notifyDataSetChanged();
-            }
-        };
-
-        Thread thread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                for(;;) {
-                    handler.sendEmptyMessage(0);
-                    try {
-                        Thread.sleep(1000);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-        });
-        thread.start();
+        localBroadcastManager = LocalBroadcastManager.getInstance(this);
+        intentFilter = new IntentFilter();
+        intentFilter.addAction("com.darren.survival.REFRESH_ELEMENTS");
+        localBroadcastReceiver = new LocalBroadcastReceiver();
+        localBroadcastManager.registerReceiver(localBroadcastReceiver, intentFilter);
     }
 
+    /**
+     * 设置横屏和全屏
+     */
     private void setScreen() {
         if (getRequestedOrientation() != ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE) setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
     }
 
+    /**
+     * elementFragment点击事件
+     */
     @Override
     public void elementFOnClick(View v) {
         int id = v.getId();
@@ -123,6 +132,9 @@ public class GameActivity extends AppCompatActivity implements ElementFragment.E
         }
     }
 
+    /**
+     *backpackFragment点击事件
+     */
     @Override
     public void backpackFOnClick(View v) {
         int id = v.getId();
@@ -137,22 +149,32 @@ public class GameActivity extends AppCompatActivity implements ElementFragment.E
         }
     }
 
+    /**
+     * motionFragment点击事件
+     */
     @Override
     public void MotionFOnClick(View v) {
         int id = v.getId();
         switch (id) {
             case R.id.btnFire:
                 if(rightFragment != chooseFragment) replaceRightFragment(chooseFragment);
-                if(survivor.getFirer().getFireTimeLeft() > 0) {
-                    chooseFragment.setChooseList(survivor.getFirer().getFireables(), ChooseFragment.CHOOSE_LIST_TYPE_FIREABLE, true);
+                if(Motion.firer.getFireTimeLeft() > 0) {
+                    chooseFragment.setChooseList(Motion.firer.getFireables(), ChooseFragment.CHOOSE_LIST_TYPE_FIREABLE, true);
                 } else {
-                    chooseFragment.setChooseList(survivor.getFirer().getKINDLINGS(), ChooseFragment.CHOOSE_LIST_TYPE_KINDLINGS, true);
+                    chooseFragment.setChooseList(Motion.firer.getKINDLING(), ChooseFragment.CHOOSE_LIST_TYPE_KINDLINGS, true);
                     replaceRightFragment(chooseFragment);
                 }
+                break;
+            case R.id.btnMake:
+                replaceRightFragment(makeFragment);
+                break;
 
         }
     }
 
+    /**
+     * chooseFragment点击事件
+     */
     @Override
     public void chooseFOnClick(View v) {
         int id = v.getId();
@@ -160,24 +182,32 @@ public class GameActivity extends AppCompatActivity implements ElementFragment.E
             case R.id.btnSure:
                 switch (chooseFragment.getChooseListType()) {
                     case ChooseFragment.CHOOSE_LIST_TYPE_KINDLINGS:
-                        chooseFragment.setChooseList(survivor.getFirer().getINFLAMMABLE(), ChooseFragment.CHOOSE_LIST_TYPE_INFLAMMABLE, false);
+                        chooseFragment.setChooseList(Motion.firer.getINFLAMMABLE(), ChooseFragment.CHOOSE_LIST_TYPE_INFLAMMABLE, false);
                         break;
                     case ChooseFragment.CHOOSE_LIST_TYPE_INFLAMMABLE:
-                        survivor.getFirer().startFire(chooseFragment.getChoices().get(0), chooseFragment.getChoices().get(1));
-                        chooseFragment.setChooseList(survivor.getFirer().getFireables(), ChooseFragment.CHOOSE_LIST_TYPE_FIREABLE, true);
+                        Motion.firer.startFire(chooseFragment.getChoices().get(0), chooseFragment.getChoices().get(1));
+                        chooseFragment.setChooseList(Motion.firer.getFireables(), ChooseFragment.CHOOSE_LIST_TYPE_FIREABLE, true);
                         break;
                     case ChooseFragment.CHOOSE_LIST_TYPE_FIREABLE:
-                        survivor.getFirer().fire(chooseFragment.getChoices().get(0));
+                        Motion.firer.fire(chooseFragment.getChoices().get(0));
                         onBackPressed();
                         break;
                 }
         }
     }
 
+    /**
+     * 刷新fragment数据
+     */
     private void notifyDataSetChanged() {
         elementFragment.notifyDataSetChanged();
+        sceneFragment.notifyDataSetChanged();
     }
 
+    /**
+     * 更换左侧显示的fragment
+     * @param newLeftFragment 将要更换成的fragment
+     */
     private void replaceLeftFragment(Fragment newLeftFragment) {
         transaction = fm.beginTransaction();
         transaction.hide(leftFragment);
@@ -186,6 +216,10 @@ public class GameActivity extends AppCompatActivity implements ElementFragment.E
         transaction.commit();
     }
 
+    /**
+     * 更换右侧显示的fragment
+     * @param newRightFragment 将要更换成的fragment
+     */
     private void replaceRightFragment(Fragment newRightFragment) {
         transaction = fm.beginTransaction();
         transaction.hide(rightFragment);
@@ -194,6 +228,9 @@ public class GameActivity extends AppCompatActivity implements ElementFragment.E
         transaction.commit();
     }
 
+    /**
+     * 返回键监听
+     */
     @Override
     public void onBackPressed() {
         if (rightFragment != motionFragment) {
@@ -227,4 +264,22 @@ public class GameActivity extends AppCompatActivity implements ElementFragment.E
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        localBroadcastManager.unregisterReceiver(localBroadcastReceiver);
+    }
+
+    private class LocalBroadcastReceiver extends BroadcastReceiver {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            switch (action) {
+                case "com.darren.survival.REFRESH_ELEMENTS":
+                    notifyDataSetChanged();
+                    break;
+            }
+        }
+    }
 }

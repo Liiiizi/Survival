@@ -20,12 +20,13 @@ public class Calorie extends Parameter {
         return calorie;
     }
 
-    public void change(int value) {
-        this.value += value;
-    }
-
     @Override
     public int getValue() {
         return value;
+    }
+
+    @Override
+    public void setValue(int value) {
+        this.value = value;
     }
 }

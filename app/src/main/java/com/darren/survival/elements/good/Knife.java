@@ -8,6 +8,7 @@ import com.darren.survival.elements.motion.good.Makable;
  */
 public class Knife extends Good implements Makable {
     public static final double WEIGHT = 0.1;
+    public static final String ID = "WK14";
     public static int COUNT = 0;
     private static Knife knife = new Knife();
 
@@ -31,5 +32,10 @@ public class Knife extends Good implements Makable {
     @Override
     public void setCOUNT(int COUNT) {
         Knife.COUNT += COUNT;
+    }
+
+    @Override
+    public String getID() {
+        return ID;
     }
 }

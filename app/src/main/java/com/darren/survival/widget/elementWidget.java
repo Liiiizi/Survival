@@ -30,7 +30,7 @@ public class elementWidget extends LinearLayout {
 
     public void setMassage(Parameter parameter) {
         txtName.setText(parameter.getName());
-        txtValue.setText(parameter.getValue() + "");
+        txtValue.setText(String.valueOf(parameter.getValue()));
     }
 
     public void setMassage(Scene scene) {

@@ -1,14 +1,14 @@
 package com.darren.survival.elements.good;
 
 import com.darren.survival.elements.model.Good;
-import com.darren.survival.elements.motion.good.Makable;
 
 /**
  * Created by Darren on 2015/12/15 0015.
  */
-public class Antelope extends Good implements Makable {
+public class Antelope extends Good {
     public static final double WEIGHT = 20;
     public static int COUNT = 0;
+    public static final String ID = "WK23";
     private static Antelope antelope = new Antelope();
 
     public static Antelope getInstance() {
@@ -31,5 +31,10 @@ public class Antelope extends Good implements Makable {
     @Override
     public void setCOUNT(int COUNT) {
         Antelope.COUNT += COUNT;
+    }
+
+    @Override
+    public String getID() {
+        return ID;
     }
 }

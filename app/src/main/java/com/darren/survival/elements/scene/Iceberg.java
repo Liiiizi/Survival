@@ -1,10 +1,5 @@
 package com.darren.survival.elements.scene;
 
-import com.darren.survival.elements.good.Branch;
-import com.darren.survival.elements.good.Firewood;
-import com.darren.survival.elements.good.FrozenBody;
-import com.darren.survival.elements.good.Ice;
-import com.darren.survival.elements.good.Stone;
 import com.darren.survival.elements.model.Good;
 import com.darren.survival.elements.model.Scene;
 
@@ -16,23 +11,18 @@ import java.util.Map;
  */
 public class Iceberg extends Scene {
     //nextScene：可能的下一场景 nextSceneWeight:每个场景可能出现的权重
-    public final String[] nextScene = {"Mountain", "Snowland"};
-    public final int[] nextSceneWeight = {1, 1};
+    public final Map<Scene, Integer> nextScene = new HashMap<>();
     //获得物品相关
-    private static final Good[] ICE = {Ice.getInstance()};
+    private static final Good[] ICE = {Good.ice};
     private static final Integer[] ICE_INFO = {100, 1};
-    private static final Good[] FROZEN_BODY = {FrozenBody.getInstance()};
+    private static final Good[] FROZEN_BODY = {Good.frozenBody};
     private static final Integer[] FROZEN_BODY_INFO = {5, 1};
-    private static final Good[] WOODS = {Branch.getInstance(), Firewood.getInstance()};
+    private static final Good[] WOODS = {Good.branch, Good.firewood};
     private static final Integer[] WOODS_INFO = {10, 1};
-    private static final Good[] STONE = {Stone.getInstance()};
+    private static final Good[] STONE = {Good.stone};
     private static final Integer[] STONE_INFO = {30, 1};
     private static final Map<Good[], Integer[]> HUNTED_GOODS = new HashMap<>();
     private static final Map<Good[], Integer[]> TOURED_GOODS = new HashMap<>();
-    //此场景类的名字
-    public static final String Type = "Iceberg";
-    //此场景的下一场景是否可能为终点场景
-    public final String CanBEnd = "none";
     //此场景的最小及最大长度
     private static final int minLength = 10;
     private static final int maxLength = 20;
@@ -40,6 +30,7 @@ public class Iceberg extends Scene {
     private int length = 20;
     //此场景的移动速度
     private int speed;
+    public static final String ID = "SC5";
     //单例模式
     private static Iceberg iceberg = new Iceberg();
 
@@ -47,6 +38,7 @@ public class Iceberg extends Scene {
     private Iceberg() {
         setLength(20);
         speed = 1;
+
         initGoods();
     }
 
@@ -55,12 +47,12 @@ public class Iceberg extends Scene {
         return iceberg;
     }
 
-    public String[] getNextScene() {
+    public Map<Scene, Integer> getNextScene() {
+        if(nextScene.isEmpty()) {
+            nextScene.put(Scene.mountain, 1);
+            nextScene.put(Scene.snowland, 1);
+        }
         return nextScene;
-    }
-
-    public int[] getNextSceneWeight() {
-        return nextSceneWeight;
     }
 
     public String getCanBEnd() {
@@ -79,7 +71,13 @@ public class Iceberg extends Scene {
         return speed;
     }
 
-    private void initGoods() {
+    @Override
+    public String getID() {
+        return ID;
+    }
+
+    @Override
+    protected void initGoods() {
         TOURED_GOODS.put(ICE, ICE_INFO);
         TOURED_GOODS.put(FROZEN_BODY, FROZEN_BODY_INFO);
         TOURED_GOODS.put(WOODS, WOODS_INFO);
