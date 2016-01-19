@@ -16,7 +16,7 @@ import com.darren.survival.elements.good.CookedMouseMeat;
 import com.darren.survival.elements.good.CookedRabbiteMeat;
 import com.darren.survival.elements.good.CookedSnakeMeat;
 import com.darren.survival.elements.good.CookedSquirrelMeat;
-import com.darren.survival.elements.good.FIshingRod;
+import com.darren.survival.elements.good.FishFishFish;
 import com.darren.survival.elements.good.FireStick;
 import com.darren.survival.elements.good.Firewood;
 import com.darren.survival.elements.good.Fish;
@@ -83,7 +83,7 @@ public abstract class Good {
     public static final Good fireStick = FireStick.getInstance();
     public static final Good firewood = Firewood.getInstance();
     public static final Good fish = Fish.getInstance();
-    public static final Good fishingRod = FIshingRod.getInstance();
+    public static final Good fishingRod = FishFishFish.getInstance();
     public static final Good fishMeat = FishMeat.getInstance();
     public static final Good foamBoard = FoamBoard.getInstance();
     public static final Good freshFish = FreshFish.getInstance();

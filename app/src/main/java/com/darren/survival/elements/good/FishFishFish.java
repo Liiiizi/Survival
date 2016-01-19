@@ -6,18 +6,18 @@ import com.darren.survival.elements.motion.good.Huntable;
 /**
  * Created by Darren on 2015/12/15 0015.
  */
-public class FIshingRod extends Good implements Huntable {
+public class FishFishFish extends Good implements Huntable {
     public static final double WEIGHT = 2;
     public static int COUNT = 0;
     public static final String ID = "HT3";
     public int test = 0;
-    private static FIshingRod fishingRod = new FIshingRod();
+    private static FishFishFish fishingRod = new FishFishFish();
 
-    public static FIshingRod getInstance() {
+    public static FishFishFish getInstance() {
         return fishingRod;
     }
 
-    private FIshingRod() {
+    private FishFishFish() {
     }
 
     @Override
@@ -32,7 +32,7 @@ public class FIshingRod extends Good implements Huntable {
 
     @Override
     public void setCOUNT(int COUNT) {
-        FIshingRod.COUNT += COUNT;
+        FishFishFish.COUNT += COUNT;
     }
 
     @Override
