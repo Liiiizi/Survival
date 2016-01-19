@@ -17,11 +17,11 @@ import java.util.List;
 /**
  * Created by Darren on 2016/1/12 0012.
  */
-public class MLA extends BaseAdapter {
+public class MaterialAdapter extends BaseAdapter {
     private LayoutInflater inflater;
     private List<Material> materials;
 
-    public MLA(Context context, Recipe recipe) {
+    public MaterialAdapter(Context context, Recipe recipe) {
         inflater = LayoutInflater.from(context);
         materials = recipe.getMaterials();
     }
