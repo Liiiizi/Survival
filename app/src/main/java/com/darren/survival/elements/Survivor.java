@@ -33,7 +33,14 @@ public class Survivor {
     }
 
     public Scene getNextScene() {
+
         return nextScene;
+    }
+
+    public Scene moveToNextScene() {
+        scene = nextScene;
+        nextScene = scene.getNext();
+        return scene;
     }
 
     public void setScene(Scene scene) {

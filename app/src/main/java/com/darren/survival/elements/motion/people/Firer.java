@@ -1,10 +1,6 @@
 package com.darren.survival.elements.motion.people;
 
 import com.darren.survival.elements.Survivor;
-import com.darren.survival.elements.good.Branch;
-import com.darren.survival.elements.good.Hay;
-import com.darren.survival.elements.good.Kindling;
-import com.darren.survival.elements.good.Sawdust;
 import com.darren.survival.elements.model.Good;
 import com.darren.survival.elements.model.Motion;
 import com.darren.survival.elements.motion.good.Fireable;
@@ -29,7 +25,7 @@ public class Firer extends Motion {
     private List<Good> KINDLING = new ArrayList<>();//火种
     private List<Good> INFLAMMABLE = new ArrayList<>();//易燃物
 
-    private List<Good> fireables = new ArrayList<>();//可燃物，添加燃料时使用
+    private List<Good> FIREABLES = new ArrayList<>();//可燃物，添加燃料时使用
 
     private static Firer firer = new Firer();
 
@@ -41,10 +37,13 @@ public class Firer extends Motion {
         survivor = Survivor.getInstance();
         FIRE_TIME_LEFT = 0;
 
-        KINDLING.add(Branch.getInstance());
-        KINDLING.add(Kindling.getInstance());
-        INFLAMMABLE.add(Sawdust.getInstance());
-        INFLAMMABLE.add(Hay.getInstance());
+        KINDLING.add(Good.lighter);
+        KINDLING.add(Good.kindling);
+        INFLAMMABLE.add(Good.sawdust);
+        INFLAMMABLE.add(Good.hay);
+
+        FIREABLES.add(Good.branch);
+        FIREABLES.add(Good.firewood);
     }
 
     @Override
@@ -107,11 +106,11 @@ public class Firer extends Motion {
         return INFLAMMABLE;
     }
 
-    public List<Good> getFireables() {
-        fireables.clear();
-        for(Good good : survivor.getBackpack()) {
-            if(good instanceof Fireable) fireables.add(good);
-        }
-        return fireables;
+    public List<Good> getFIREABLES() {
+//        FIREABLES.clear();
+//        for(Good good : survivor.getBackpack()) {
+//            if(good instanceof Fireable) FIREABLES.add(good);
+//        }
+        return FIREABLES;
     }
 }

@@ -40,10 +40,8 @@ public class Forest extends Scene {
 
     //单例模式
     private Forest() {
-        setLength(20);
+        super();
         speed = 2;
-
-        initGoods();
     }
 
 
@@ -63,12 +61,22 @@ public class Forest extends Scene {
         return nextScene;
     }
 
+    @Override
+    protected int getMinLength() {
+        return minLength;
+    }
+
+    @Override
+    protected int getMaxLength() {
+        return maxLength;
+    }
+
     public int getLength() {
         return length;
     }
 
     public void setLength(int length) {
-        this.length = length;
+        this.length += length;
     }
 
     public int getSpeed() {

@@ -27,7 +27,7 @@ public class Plains extends Scene {
     private static final int minLength = 20;
     private static final int maxLength = 50;
     //初始化此场景时随机长度
-    private int length = 20;
+    private int length;
     //此场景的移动速度
     private int speed;
     public static final String ID = "SC2";
@@ -36,10 +36,8 @@ public class Plains extends Scene {
 
     //单例模式
     private Plains() {
-        setLength(20);
+        super();
         speed = 2;
-
-        initGoods();
     }
 
     //单例模式
@@ -57,6 +55,16 @@ public class Plains extends Scene {
         return nextScene;
     }
 
+    @Override
+    protected int getMinLength() {
+        return minLength;
+    }
+
+    @Override
+    protected int getMaxLength() {
+        return maxLength;
+    }
+
     public String getCanBEnd() {
         return CanBEnd;
     }
@@ -66,7 +74,7 @@ public class Plains extends Scene {
     }
 
     public void setLength(int length) {
-        this.length = length;
+        this.length += length;
     }
 
     public int getSpeed() {

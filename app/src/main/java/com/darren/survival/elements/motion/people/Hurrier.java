@@ -32,11 +32,10 @@ public class Hurrier extends Motion {
     public void act() {
        super.act();
         firer.setFireTimeLeft(-firer.getFireTimeLeft());
-        scene.setLength(scene.getLength() - scene.getSpeed());
+        scene.setLength(-scene.getSpeed());
         if (scene.getLength() <= 0) {
-            scene.setLength(20);
-            getSurvivor().setScene(scene.getNext());
-            scene = getSurvivor().getScene();
+            scene.initLength();
+            scene = getSurvivor().moveToNextScene();
         }
     }
 

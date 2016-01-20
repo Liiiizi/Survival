@@ -38,10 +38,8 @@ public class Lake extends Scene {
 
     //单例模式
     private Lake() {
-        setLength(20);
+        super();
         speed = 2;
-
-        initGoods();
     }
 
     //单例模式
@@ -57,6 +55,16 @@ public class Lake extends Scene {
         return nextScene;
     }
 
+    @Override
+    protected int getMinLength() {
+        return minLength;
+    }
+
+    @Override
+    protected int getMaxLength() {
+        return maxLength;
+    }
+
     public String getCanBEnd() {
         return CanBEnd;
     }
@@ -66,7 +74,7 @@ public class Lake extends Scene {
     }
 
     public void setLength(int length) {
-        this.length = length;
+        this.length += length;
     }
 
     public int getSpeed() {

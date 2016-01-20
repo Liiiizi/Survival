@@ -11,7 +11,7 @@ import android.widget.Button;
 import com.darren.survival.R;
 import com.darren.survival.elements.Survivor;
 import com.darren.survival.elements.model.Parameter;
-import com.darren.survival.widget.elementWidget;
+import com.darren.survival.widget.ElementWidget;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -20,11 +20,11 @@ public class ElementFragment extends Fragment implements View.OnClickListener {
     private Survivor survivor;
     private View view;
 
-    private elementWidget txtCalorie;
-    private elementWidget txtTemperature;
-    private elementWidget txtWater;
-    private elementWidget txtVigor;
-    private elementWidget txtTime;
+    private ElementWidget txtCalorie;
+    private ElementWidget txtTemperature;
+    private ElementWidget txtWater;
+    private ElementWidget txtVigor;
+    private ElementWidget txtTime;
 
     private Button btnBackpack;
 
@@ -42,11 +42,11 @@ public class ElementFragment extends Fragment implements View.OnClickListener {
     private void init() {
         survivor = Survivor.getInstance();
 
-        txtCalorie = (elementWidget)view.findViewById(R.id.txtCalorie);
-        txtTemperature = (elementWidget)view.findViewById(R.id.txtTemperature);
-        txtWater = (elementWidget)view.findViewById(R.id.txtWater);
-        txtVigor = (elementWidget)view.findViewById(R.id.txtVigor);
-        txtTime = (elementWidget)view.findViewById(R.id.txtTime);
+        txtCalorie = (ElementWidget)view.findViewById(R.id.txtCalorie);
+        txtTemperature = (ElementWidget)view.findViewById(R.id.txtTemperature);
+        txtWater = (ElementWidget)view.findViewById(R.id.txtWater);
+        txtVigor = (ElementWidget)view.findViewById(R.id.txtVigor);
+        txtTime = (ElementWidget)view.findViewById(R.id.txtTime);
 
         btnBackpack = (Button)view.findViewById(R.id.btnBackpack);
 

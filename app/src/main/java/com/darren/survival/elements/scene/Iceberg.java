@@ -27,7 +27,7 @@ public class Iceberg extends Scene {
     private static final int minLength = 10;
     private static final int maxLength = 20;
     //初始化此场景时随机长度
-    private int length = 20;
+    private int length;
     //此场景的移动速度
     private int speed;
     public static final String ID = "SC5";
@@ -36,10 +36,8 @@ public class Iceberg extends Scene {
 
     //单例模式
     private Iceberg() {
-        setLength(20);
-        speed = 1;
-
-        initGoods();
+        super();
+        speed = 2;
     }
 
     //单例模式
@@ -55,6 +53,16 @@ public class Iceberg extends Scene {
         return nextScene;
     }
 
+    @Override
+    protected int getMinLength() {
+        return minLength;
+    }
+
+    @Override
+    protected int getMaxLength() {
+        return maxLength;
+    }
+
     public String getCanBEnd() {
         return CanBEnd;
     }
@@ -64,7 +72,7 @@ public class Iceberg extends Scene {
     }
 
     public void setLength(int length) {
-        this.length = length;
+        this.length += length;
     }
 
     public int getSpeed() {

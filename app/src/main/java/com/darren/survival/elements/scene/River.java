@@ -30,8 +30,8 @@ public class River extends Scene {
     private static final Map<Good[], Integer[]> HUNTED_GOODS = new HashMap<>();
     private static final Map<Good[], Integer[]> TOURED_GOODS = new HashMap<>();
     //此场景的最小及最大长度
-    private final int minLength = 10;
-    private final int maxLength = 20;
+    private static final int minLength = 10;
+    private static final int maxLength = 20;
     //初始化此场景时随机长度
     private int length;
     //此场景的移动速度
@@ -42,10 +42,8 @@ public class River extends Scene {
 
     //单例模式
     private River() {
-        setLength(20);
+        super();
         speed = 2;
-
-        initGoods();
     }
 
     //单例模式
@@ -63,6 +61,16 @@ public class River extends Scene {
         return nextScene;
     }
 
+    @Override
+    protected int getMinLength() {
+        return minLength;
+    }
+
+    @Override
+    protected int getMaxLength() {
+        return maxLength;
+    }
+
     public String getCanBEnd() {
         return CanBEnd;
     }
@@ -72,7 +80,7 @@ public class River extends Scene {
     }
 
     public void setLength(int length) {
-        this.length = length;
+        this.length += length;
     }
 
     public int getSpeed() {

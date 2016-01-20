@@ -77,6 +77,11 @@ public abstract class Scene {
         return sceneMap.get(ID);
     }
 
+    protected Scene() {
+        initLength();
+        initGoods();
+    }
+
     public static Scene getFirstScene() {
         count++;//到达的场景数加1
         if(nextScene.isEmpty()) {
@@ -97,11 +102,18 @@ public abstract class Scene {
         return RandomUtil.randomByWeight(getNextScene());//随机下一个到达的场景
     }
 
+    public void initLength() {
+        int length = getMinLength() + RandomUtil.nextInt(getMaxLength() - getMinLength());
+        setLength(length - getLength());
+    }
+
     abstract public Map<Scene, Integer> getNextScene();
     abstract public int getLength();
     abstract public void setLength(int length);
     abstract public int getSpeed();
     abstract public String getID();
+    abstract protected int getMinLength();
+    abstract protected int getMaxLength();
     /**
      * 初始化一些行为可以获得的物品
      */

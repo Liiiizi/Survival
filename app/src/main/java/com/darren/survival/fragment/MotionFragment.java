@@ -3,6 +3,7 @@ package com.darren.survival.fragment;
 
 import android.app.Fragment;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
 import android.view.LayoutInflater;
@@ -65,6 +66,11 @@ public class MotionFragment extends Fragment {
         btnMake.setOnClickListener(onClickAdapter);
 
         localBroadcastManager = LocalBroadcastManager.getInstance(getActivity());
+    }
+
+    public void notifySetDataChanged() {
+        if(Motion.firer.getFireTimeLeft() >0) btnFire.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
+        else  btnFire.setTypeface(Typeface.defaultFromStyle(Typeface.NORMAL));
     }
 
     public interface MotionFOnClickListener {

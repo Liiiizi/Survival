@@ -18,6 +18,7 @@ import android.view.WindowManager;
 
 import com.darren.survival.R;
 import com.darren.survival.elements.Survivor;
+import com.darren.survival.elements.model.Good;
 import com.darren.survival.elements.model.Motion;
 import com.darren.survival.fragment.BackpackFragment;
 import com.darren.survival.fragment.ChooseFragment;
@@ -25,6 +26,8 @@ import com.darren.survival.fragment.ElementFragment;
 import com.darren.survival.fragment.MakeFragment;
 import com.darren.survival.fragment.MotionFragment;
 import com.darren.survival.fragment.SceneFragment;
+
+import java.util.List;
 
 
 public class GameActivity extends AppCompatActivity implements ElementFragment.ElementFOnClickListener, BackpackFragment.BackpackFOnClicklistener, MotionFragment.MotionFOnClickListener,
@@ -48,8 +51,10 @@ public class GameActivity extends AppCompatActivity implements ElementFragment.E
     private IntentFilter intentFilter;
     private LocalBroadcastManager localBroadcastManager;
     private LocalBroadcastReceiver localBroadcastReceiver;
+
     /**
      * 启动此activity
+     *
      * @param context 上下文
      */
     public static void actionStart(Context context) {
@@ -133,7 +138,7 @@ public class GameActivity extends AppCompatActivity implements ElementFragment.E
     }
 
     /**
-     *backpackFragment点击事件
+     * backpackFragment点击事件
      */
     @Override
     public void backpackFOnClick(View v) {
@@ -157,12 +162,12 @@ public class GameActivity extends AppCompatActivity implements ElementFragment.E
         int id = v.getId();
         switch (id) {
             case R.id.btnFire:
-                if(rightFragment != chooseFragment) replaceRightFragment(chooseFragment);
-                if(Motion.firer.getFireTimeLeft() > 0) {
-                    chooseFragment.setChooseList(Motion.firer.getFireables(), ChooseFragment.CHOOSE_LIST_TYPE_FIREABLE, true);
+                if (Motion.firer.getFireTimeLeft() <= 0) {
+                    chooseFragment.setData(ChooseFragment.CHOICE_TYPE_KINDLING_AND_INFLAMMABLE, Motion.firer.getKINDLING(), Motion.firer.getINFLAMMABLE());
+                    if (rightFragment != chooseFragment) replaceRightFragment(chooseFragment);
                 } else {
-                    chooseFragment.setChooseList(Motion.firer.getKINDLING(), ChooseFragment.CHOOSE_LIST_TYPE_KINDLINGS, true);
-                    replaceRightFragment(chooseFragment);
+                    chooseFragment.setData(ChooseFragment.CHOICE_TYPE_FIREABLES, Motion.firer.getFIREABLES());
+                    if (rightFragment != chooseFragment) replaceRightFragment(chooseFragment);
                 }
                 break;
             case R.id.btnMake:
@@ -179,20 +184,22 @@ public class GameActivity extends AppCompatActivity implements ElementFragment.E
     public void chooseFOnClick(View v) {
         int id = v.getId();
         switch (id) {
-            case R.id.btnSure:
-                switch (chooseFragment.getChooseListType()) {
-                    case ChooseFragment.CHOOSE_LIST_TYPE_KINDLINGS:
-                        chooseFragment.setChooseList(Motion.firer.getINFLAMMABLE(), ChooseFragment.CHOOSE_LIST_TYPE_INFLAMMABLE, false);
+            case R.id.sure:
+                switch (chooseFragment.getChoiceType()) {
+                    case ChooseFragment.CHOICE_TYPE_KINDLING_AND_INFLAMMABLE:
+                        List<Good> choices = chooseFragment.getChoices();
+                        Motion.firer.startFire(choices.get(0), choices.get(1));
+                        chooseFragment.setData(ChooseFragment.CHOICE_TYPE_FIREABLES, Motion.firer.getFIREABLES());
+                        if (rightFragment != chooseFragment) replaceRightFragment(chooseFragment);
                         break;
-                    case ChooseFragment.CHOOSE_LIST_TYPE_INFLAMMABLE:
-                        Motion.firer.startFire(chooseFragment.getChoices().get(0), chooseFragment.getChoices().get(1));
-                        chooseFragment.setChooseList(Motion.firer.getFireables(), ChooseFragment.CHOOSE_LIST_TYPE_FIREABLE, true);
-                        break;
-                    case ChooseFragment.CHOOSE_LIST_TYPE_FIREABLE:
+                    case ChooseFragment.CHOICE_TYPE_FIREABLES:
                         Motion.firer.fire(chooseFragment.getChoices().get(0));
-                        onBackPressed();
-                        break;
+                        chooseFragment.notifySetDataChanged();
                 }
+                break;
+            case R.id.back:
+                onBackPressed();
+                break;
         }
     }
 
@@ -202,10 +209,12 @@ public class GameActivity extends AppCompatActivity implements ElementFragment.E
     private void notifyDataSetChanged() {
         elementFragment.notifyDataSetChanged();
         sceneFragment.notifyDataSetChanged();
+        motionFragment.notifySetDataChanged();
     }
 
     /**
      * 更换左侧显示的fragment
+     *
      * @param newLeftFragment 将要更换成的fragment
      */
     private void replaceLeftFragment(Fragment newLeftFragment) {
@@ -218,6 +227,7 @@ public class GameActivity extends AppCompatActivity implements ElementFragment.E
 
     /**
      * 更换右侧显示的fragment
+     *
      * @param newRightFragment 将要更换成的fragment
      */
     private void replaceRightFragment(Fragment newRightFragment) {
@@ -240,6 +250,7 @@ public class GameActivity extends AppCompatActivity implements ElementFragment.E
             rightFragment = motionFragment;
             transaction.commit();
         } else super.onBackPressed();
+        notifyDataSetChanged();
     }
 
     @Override

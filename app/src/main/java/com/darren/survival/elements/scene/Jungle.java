@@ -59,10 +59,8 @@ public class Jungle extends Scene {
 
     //单例模式
     private Jungle() {
-        setLength(20);
-        speed = 1;
-
-        initGoods();
+        super();
+        speed = 2;
     }
 
     //单例模式
@@ -80,6 +78,16 @@ public class Jungle extends Scene {
         return nextScene;
     }
 
+    @Override
+    protected int getMinLength() {
+        return minLength;
+    }
+
+    @Override
+    protected int getMaxLength() {
+        return maxLength;
+    }
+
     public String getCanBEnd() {
         return CanBEnd;
     }
@@ -89,7 +97,7 @@ public class Jungle extends Scene {
     }
 
     public void setLength(int length) {
-        this.length = length;
+        this.length += length;
     }
 
     public int getSpeed() {

@@ -40,10 +40,8 @@ public class Snowland extends Scene {
 
     //单例模式
     private Snowland() {
-        setLength(20);
-        speed = 1;
-
-        initGoods();
+        super();
+        speed = 2;
     }
 
     //单例模式
@@ -60,16 +58,23 @@ public class Snowland extends Scene {
         return nextScene;
     }
 
-    public String getCanBEnd() {
-        return CanBEnd;
+    @Override
+    protected int getMinLength() {
+        return minLength;
     }
+
+    @Override
+    protected int getMaxLength() {
+        return maxLength;
+    }
+
 
     public int getLength() {
         return length;
     }
 
     public void setLength(int length) {
-        this.length = length;
+        this.length += length;
     }
 
     public int getSpeed() {

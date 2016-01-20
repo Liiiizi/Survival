@@ -2,44 +2,43 @@ package com.darren.survival.fragment;
 
 
 import android.app.Fragment;
-import android.graphics.Color;
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.content.LocalBroadcastManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.ListView;
-import android.widget.Toast;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
-import com.darren.survival.Adapter.ChooseListAdapter;
 import com.darren.survival.R;
 import com.darren.survival.elements.model.Good;
+import com.darren.survival.elements.model.Motion;
+import com.darren.survival.widget.ChooseWidget;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
-/**
- * A simple {@link Fragment} subclass.
- */
-public class ChooseFragment extends Fragment implements View.OnClickListener {
-    public static final int CHOOSE_LIST_TYPE_KINDLINGS = 0;
-    public static final int CHOOSE_LIST_TYPE_INFLAMMABLE = 1;
-    public static final int CHOOSE_LIST_TYPE_FIREABLE = 2;
 
-    View view;
+public class ChooseFragment extends Fragment {
+    public static final int CHOICE_TYPE_KINDLING_AND_INFLAMMABLE = 0;
+    public static final int CHOICE_TYPE_FIREABLES = 1;
 
-    ListView chooseList;
+    private View view;
 
-    Button btnSure;
+    private TextView hint;
+    private Button back;
+    private Button sure;
 
-    ChooseListAdapter chooseListAdapter;
+    private int choiceType;
 
-    private List<Good> choices;
+    private List<ChooseWidget> chooseWidgetList = new ArrayList<>();
 
-    private Good choice = null;
+    private LinearLayout chooseWidgets;
 
-    private int chooseListType;
+    private LocalBroadcastManager localBroadcastManager;
 
     public ChooseFragment() {
     }
@@ -49,67 +48,82 @@ public class ChooseFragment extends Fragment implements View.OnClickListener {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_choose, container, false);
-        init();
+        chooseWidgets = (LinearLayout)view.findViewById(R.id.chooceWidgets);
+        hint = (TextView)view.findViewById(R.id.hint);
+        back = (Button)view.findViewById(R.id.back);
+        sure = (Button)view.findViewById(R.id.sure);
+
+        View.OnClickListener onClickListener = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(getActivity() instanceof ChooseFOnClickListener) {
+                    ((ChooseFOnClickListener) getActivity()).chooseFOnClick(v);
+                }
+                int id = v.getId();
+                switch (id) {
+                    case R.id.sure :
+                        break;
+                    case R.id.back :
+                        break;
+                }
+                Intent intent = new Intent("com.darren.survival.REFRESH_ELEMENTS");
+                localBroadcastManager.sendBroadcast(intent);
+            }
+        };
+        sure.setOnClickListener(onClickListener);
+        localBroadcastManager = LocalBroadcastManager.getInstance(getActivity());
         return view;
     }
 
-    private void init() {
-        chooseList = (ListView)view.findViewById(R.id.chooseList);
+    public void setData(int choiceType, List<Good> ... choices) {
+        this.choiceType = choiceType;
+        chooseWidgets.removeAllViews();
+        chooseWidgetList.clear();
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+        params.weight = 1;
 
-        btnSure = (Button)view.findViewById(R.id.btnSure);
-
-        btnSure.setOnClickListener(this);
-
-        chooseListAdapter = new ChooseListAdapter(getActivity());
-
-        chooseList.setAdapter(chooseListAdapter);
-
-        chooseList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-                for(int i=0; i<parent.getChildCount(); i++) {
-                    parent.getChildAt(i).setBackgroundColor(Color.WHITE);
-                }
-                view.setBackgroundColor(Color.DKGRAY);
-                choice = (Good)chooseListAdapter.getItem(position);
-            }
-        });
-
-        choices = new ArrayList<>();
+        switch (choiceType) {
+            case CHOICE_TYPE_KINDLING_AND_INFLAMMABLE :
+                ChooseWidget chooseWidget = new ChooseWidget(getActivity(), null);
+                chooseWidget.setData("火种", choices[0]);
+                chooseWidget.setLayoutParams(params);
+                chooseWidgets.addView(chooseWidget);
+                chooseWidgetList.add(chooseWidget);
+                chooseWidget = new ChooseWidget(getActivity(), null);
+                chooseWidget.setData("引燃物", choices[1]);
+                chooseWidget.setLayoutParams(params);
+                chooseWidgets.addView(chooseWidget);
+                chooseWidgetList.add(chooseWidget);
+                hint.setText("请选择火种和引燃物");
+                break;
+            case CHOICE_TYPE_FIREABLES :
+                chooseWidget = new ChooseWidget(getActivity(), null);
+                chooseWidget.setData("助燃物", choices[0]);
+                chooseWidget.setLayoutParams(params);
+                chooseWidgets.addView(chooseWidget);
+                chooseWidgetList.add(chooseWidget);
+                hint.setText(String.format("剩余燃烧时间：%dmin", Motion.firer.getFireTimeLeft()));
+                break;
+        }
     }
 
-    public void setChooseList(List<Good> goods, int chooseListType, boolean isClearChoices) {
-        if(isClearChoices) choices.clear();
-        chooseListAdapter.setData(goods);
-        this.chooseListType = chooseListType;
+    public void notifySetDataChanged() {
+        for(ChooseWidget chooseWidget : chooseWidgetList) {
+            chooseWidget.notifySetDataChanged();
+        }
+        hint.setText(String.format("剩余燃烧时间：%dmin", Motion.firer.getFireTimeLeft()));
     }
 
     public List<Good> getChoices() {
+        List<Good> choices = new LinkedList<>();
+        for(ChooseWidget chooseWidget : chooseWidgetList) {
+            choices.add(chooseWidget.getChoice());
+        }
         return choices;
     }
 
-    public int getChooseListType() {
-        return chooseListType;
-    }
-
-    @Override
-    public void onClick(View v) {
-        int id = v.getId();
-        switch (id) {
-            case R.id.btnSure:
-                if(getActivity() instanceof ChooseFOnClickListener) {
-                    if(choice == null) {
-                        Toast.makeText(getActivity(), "请选择一项", Toast.LENGTH_LONG).show();
-                        return;
-
-                    }
-                    choices.add(choice);
-                    choice = null;
-                    ((ChooseFOnClickListener)getActivity()).chooseFOnClick(v);
-                }
-                break;
-        }
+    public int getChoiceType() {
+        return choiceType;
     }
 
     public interface ChooseFOnClickListener {

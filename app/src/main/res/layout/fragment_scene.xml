@@ -6,7 +6,7 @@
               android:orientation="horizontal"
     >
 
-    <com.darren.survival.widget.elementWidget
+    <com.darren.survival.widget.ElementWidget
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/scene"
@@ -14,7 +14,7 @@
         android:orientation="horizontal"
         android:gravity="center"/>
 
-    <com.darren.survival.widget.elementWidget
+    <com.darren.survival.widget.ElementWidget
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/nextScene"
@@ -22,7 +22,7 @@
         android:gravity="center"
         android:orientation="horizontal"/>
 
-    <com.darren.survival.widget.elementWidget
+    <com.darren.survival.widget.ElementWidget
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/distance"

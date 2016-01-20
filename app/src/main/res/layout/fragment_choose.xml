@@ -3,51 +3,52 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:orientation="vertical"
-              tools:context="com.darren.survival.fragment.ChooseFragment">
+              tools:context="com.darren.survival.fragment.ChooseFragment"
+              android:background="#1e1a1a">
+
+    <!-- TODO: Update blank fragment layout -->
+
+    <LinearLayout
+        android:id="@+id/chooceWidgets"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="horizontal">
+
+    </LinearLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent"
+        android:layout_weight="4"
+        >
 
         <TextView
-            android:id="@+id/txtChoose"
+            android:id="@+id/hint"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:text="请选择"
-            android:textAppearance="?android:attr/textAppearanceLarge"/>
-
-        <TextView
-            android:id="@+id/txtChoice"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/txtChoose"
-            android:layout_toEndOf="@+id/txtChoose"
-            android:layout_toRightOf="@+id/txtChoose"
-            android:text="choice"
-            android:textAppearance="?android:attr/textAppearanceLarge"/>
-    </RelativeLayout>
-
-    <ListView
-        android:id="@+id/chooseList"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        />
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+            android:text="hint"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="#ffffff"
+            android:layout_centerVertical="true"/>
 
         <Button
-            android:id="@+id/btnSure"
+            android:id="@+id/back"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="bottom|right"
-            android:text=" 确定"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentRight="true"/>
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="20dp"
+            android:text="back"/>
+
+        <Button
+            android:id="@+id/sure"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="20dp"
+            android:layout_toLeftOf="@+id/back"
+            android:text="sure"/>
     </RelativeLayout>
 
 </LinearLayout>
