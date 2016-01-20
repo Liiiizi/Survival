@@ -6,7 +6,7 @@
               android:orientation="vertical"
               tools:context="com.darren.survival.fragment.ElementFragment">
 
-    <com.darren.survival.widget.ElementWidget
+    <com.darren.survival.widget.ElementViewWidget
         android:id="@+id/txtCalorie"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -14,7 +14,7 @@
         android:gravity="center"
         android:layout_gravity="center"/>
 
-    <com.darren.survival.widget.ElementWidget
+    <com.darren.survival.widget.ElementViewWidget
         android:id="@+id/txtTemperature"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -22,7 +22,7 @@
         android:gravity="center"
         android:layout_gravity="center"/>
 
-    <com.darren.survival.widget.ElementWidget
+    <com.darren.survival.widget.ElementViewWidget
         android:id="@+id/txtWater"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -30,7 +30,7 @@
         android:gravity="center"
         android:layout_gravity="center"/>
 
-    <com.darren.survival.widget.ElementWidget
+    <com.darren.survival.widget.ElementViewWidget
         android:id="@+id/txtVigor"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -38,7 +38,7 @@
         android:gravity="center"
         android:layout_gravity="center"/>
 
-    <com.darren.survival.widget.ElementWidget
+    <com.darren.survival.widget.ElementViewWidget
         android:id="@+id/txtTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

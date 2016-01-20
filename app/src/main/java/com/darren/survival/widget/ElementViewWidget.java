@@ -13,11 +13,11 @@ import com.darren.survival.elements.model.Scene;
 /**
  * Created by Darren on 2015/12/28 0028.
  */
-public class elementWidget extends LinearLayout {
+public class ElementViewWidget extends LinearLayout {
     private TextView txtName = null;
     private TextView txtValue = null;
 
-    public elementWidget(Context context, AttributeSet attrs) {
+    public ElementViewWidget(Context context, AttributeSet attrs) {
         super(context, attrs);
         LayoutInflater.from(context).inflate(R.layout.element_widget, this);
         init();

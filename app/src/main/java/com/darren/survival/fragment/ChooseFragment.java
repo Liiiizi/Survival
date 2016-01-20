@@ -15,7 +15,7 @@ import android.widget.TextView;
 import com.darren.survival.R;
 import com.darren.survival.elements.model.Good;
 import com.darren.survival.elements.model.Motion;
-import com.darren.survival.widget.ChooseWidget;
+import com.darren.survival.widget.ChooseViewWidget;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -34,7 +34,7 @@ public class ChooseFragment extends Fragment {
 
     private int choiceType;
 
-    private List<ChooseWidget> chooseWidgetList = new ArrayList<>();
+    private List<ChooseViewWidget> chooseWidgetList = new ArrayList<>();
 
     private LinearLayout chooseWidgets;
 
@@ -84,12 +84,12 @@ public class ChooseFragment extends Fragment {
 
         switch (choiceType) {
             case CHOICE_TYPE_KINDLING_AND_INFLAMMABLE :
-                ChooseWidget chooseWidget = new ChooseWidget(getActivity(), null);
+                ChooseViewWidget chooseWidget = new ChooseViewWidget(getActivity(), null);
                 chooseWidget.setData("火种", choices[0]);
                 chooseWidget.setLayoutParams(params);
                 chooseWidgets.addView(chooseWidget);
                 chooseWidgetList.add(chooseWidget);
-                chooseWidget = new ChooseWidget(getActivity(), null);
+                chooseWidget = new ChooseViewWidget(getActivity(), null);
                 chooseWidget.setData("引燃物", choices[1]);
                 chooseWidget.setLayoutParams(params);
                 chooseWidgets.addView(chooseWidget);
@@ -97,7 +97,7 @@ public class ChooseFragment extends Fragment {
                 hint.setText("请选择火种和引燃物");
                 break;
             case CHOICE_TYPE_FIREABLES :
-                chooseWidget = new ChooseWidget(getActivity(), null);
+                chooseWidget = new ChooseViewWidget(getActivity(), null);
                 chooseWidget.setData("助燃物", choices[0]);
                 chooseWidget.setLayoutParams(params);
                 chooseWidgets.addView(chooseWidget);
@@ -108,7 +108,7 @@ public class ChooseFragment extends Fragment {
     }
 
     public void notifySetDataChanged() {
-        for(ChooseWidget chooseWidget : chooseWidgetList) {
+        for(ChooseViewWidget chooseWidget : chooseWidgetList) {
             chooseWidget.notifySetDataChanged();
         }
         hint.setText(String.format("剩余燃烧时间：%dmin", Motion.firer.getFireTimeLeft()));
@@ -116,7 +116,7 @@ public class ChooseFragment extends Fragment {
 
     public List<Good> getChoices() {
         List<Good> choices = new LinkedList<>();
-        for(ChooseWidget chooseWidget : chooseWidgetList) {
+        for(ChooseViewWidget chooseWidget : chooseWidgetList) {
             choices.add(chooseWidget.getChoice());
         }
         return choices;

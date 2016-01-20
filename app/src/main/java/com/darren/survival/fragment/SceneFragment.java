@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 
 import com.darren.survival.R;
 import com.darren.survival.elements.Survivor;
-import com.darren.survival.widget.ElementWidget;
+import com.darren.survival.widget.ElementViewWidget;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -17,9 +17,9 @@ import com.darren.survival.widget.ElementWidget;
 public class SceneFragment extends Fragment {
     private View view;
 
-    private ElementWidget scene;
-    private ElementWidget nextScene;
-    private ElementWidget distance;
+    private ElementViewWidget scene;
+    private ElementViewWidget nextScene;
+    private ElementViewWidget distance;
 
     private Survivor survivor = Survivor.getInstance();
 
@@ -37,9 +37,9 @@ public class SceneFragment extends Fragment {
     }
 
     private void init() {
-        scene = (ElementWidget)view.findViewById(R.id.scene);
-        nextScene = (ElementWidget)view.findViewById(R.id.nextScene);
-        distance = (ElementWidget)view.findViewById(R.id.distance);
+        scene = (ElementViewWidget)view.findViewById(R.id.scene);
+        nextScene = (ElementViewWidget)view.findViewById(R.id.nextScene);
+        distance = (ElementViewWidget)view.findViewById(R.id.distance);
 
         scene.setMassage("当前场景", survivor.getScene().getName());
         nextScene.setMassage("下一场景", survivor.getNextScene().getName());

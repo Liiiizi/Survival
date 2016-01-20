@@ -6,7 +6,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 
 import com.darren.survival.elements.model.Good;
-import com.darren.survival.widget.UseGoodWidget;
+import com.darren.survival.widget.UseGoodViewWidget;
 
 import java.util.List;
 
@@ -54,11 +54,11 @@ public class ChooseAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        UseGoodWidget item;
+        UseGoodViewWidget item;
         if (convertView == null) {
-            item = new UseGoodWidget(context, null);
+            item = new UseGoodViewWidget(context, null);
         } else {
-            item = (UseGoodWidget) convertView;
+            item = (UseGoodViewWidget) convertView;
         }
         item.setMassage(choices.get(position));
 
